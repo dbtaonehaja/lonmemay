@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Robot Dự Đoán</title>
+  <style>
+    :root {
+      --bg-color: #0d1117;
+      --card-bg: rgba(255, 255, 255, 0.02);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --text-color: #7b848c;
+      --session-color: #647687;
+      --prediction-color: #9cdcfe;
+      --shadow-color: rgba(0, 0, 0, 0.2);
+      --processing-color: #ffaa00;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+    }
+    .draggable-box {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 9999;
+      cursor: grab;
+      user-select: none;
+      transition: transform 0.8s ease-in-out;
+      transform-origin: top left;
+    }
+    .robot-container {
+      position: relative;
+    }
+    .robot-container img {
+      width: 80px;
+      border-radius: 50%;
+      box-shadow: 0 0 5px rgba(0, 255, 200, 0.2);
+      animation: robot-glow 2s infinite alternate;
+    }
+    @keyframes robot-glow {
+      from { box-shadow: 0 0 5px rgba(0, 255, 200, 0.2); }
+      to { box-shadow: 0 0 10px rgba(0, 255, 200, 0.4); }
+    }
+    .prediction-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 10px 14px;
+      border-radius: 10px;
+      min-width: 150px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 10px var(--shadow-color);
+      transition: box-shadow 0.3s ease;
+    }
+    .prediction-box:hover {
+      box-shadow: 0 0 15px var(--shadow-color);
+    }
+    .session-info {
+      font-weight: 500;
+      white-space: nowrap;
+      opacity: 0.8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    #phien-text {
+        color: rgba(255, 255, 255, 0.7);
+    }
+    #du-doan-text {
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 5px;
+      color: #ffffff;
+      text-shadow: none;
+      opacity: 0.9;
+    }
+    #do-tin-cay-text {
+      font-size: 12px;
+      font-weight: normal;
+      margin-top: 3px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 99999;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 8px 12px;
+      color: #7b848c;
+      font-weight: bold;
+      font-size: 14px;
+      text-decoration: none;
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .back-button:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+    .refresh-icon {
+      font-family: 'Font Awesome 6 Free', 'Arial', sans-serif;
+      font-size: 20px;
+      font-weight: 900;
+      cursor: pointer;
+      color: #ffffff;
+    }
+    .horizontal-layout {
+      transform: rotate(90deg);
+      transform-origin: 0 0;
+    }
+    .processing-text {
+        color: var(--processing-color);
+    }
+    .loading-dot::after {
+        content:"";
+        animation:dots 1.5s steps(3,end) infinite;
+    }
+    @keyframes dots {
+        0%{content:"";} 33%{content:".";} 66%{content:"..";} 100%{content:"...";}
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <a href="menu.html" class="back-button">
+    <i class="fas fa-arrow-left"></i>
+    Quay lại
+  </a>
+  <div class="draggable-box" id="dragBox">
+    <div class="robot-container">
+      <img src="https://i.postimg.cc/1zLnNsCZ/IMG-3575.gif" alt="Robot" id="robot-img">
+    </div>
+    <div class="prediction-box">
+      <div id="phien-text" class="session-info">
+        <span id="session-display">⌛ Chờ phiên mới...</span>
+        <span class="refresh-icon" id="refresh-icon">↻</span>
+      </div>
+      <div id="du-doan-text" class="session-info"></div>
+      <div id="do-tin-cay-text" class="session-info"></div>
+    </div>
+  </div>
+  <iframe src="https://play.lc79.bet/" frameborder="0"
+    style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:1"></iframe>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const firebaseConfig = {
+          apiKey: "AIzaSyAXtM_AHMeg76S0VaxQTJ_e68qKg0KxKRk",
+          authDomain: "ma-my-7cb60.firebaseapp.com",
+          projectId: "ma-my-7cb60",
+          storageBucket: "ma-my-7cb60.firebasestorage.app",
+          messagingSenderId: "139387264637",
+          appId: "1:139387264637:web:5c296efe7d3bb97a2a5b14",
+          measurementId: "G-E6RHBS10QV"
+      };
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+
+      function redirectToLogin() {
+          window.location.href = 'index.html';
+      }
+
+      async function initApp() {
+          const userInfo = JSON.parse(localStorage.getItem('tool_user_info'));
+          
+          if (!userInfo || !userInfo.username) {
+              redirectToLogin();
+              return;
+          }
+
+          try {
+              const userDoc = await db.collection('users').doc(userInfo.username).get();
+              const userData = userDoc.data();
+              
+              if (!userDoc.exists || !userData.isActive || new Date(userData.expiryDate) < new Date()) {
+                  redirectToLogin();
+                  return;
+              }
+
+              startToolFunctions();
+              startPeriodicKeyCheck(userInfo.username);
+              
+          } catch (error) {
+              console.error("Lỗi khi kiểm tra key:", error);
+              redirectToLogin();
+          }
+      }
+
+      function startToolFunctions() {
+          const API_PROXY_URL = "https://api.allorigins.win/raw?url=";
+          const YOUR_API_URL = "https://seven9lonc.onrender.com/api/2k15";
+          const DISPLAY_DURATION_MS = 30000;
+          const PROCESSING_DURATION_MS = 1000;
+          const dragBox = document.getElementById("dragBox");
+          const sessionDisplay = document.getElementById("session-display");
+          const duDoanText = document.getElementById("du-doan-text");
+          const doTinCayText = document.getElementById("do-tin-cay-text");
+          const refreshIcon = document.getElementById("refresh-icon");
+
+          let lastPhien = null;
+
+          function setText(phien, duDoan, doTinCay) {
+              sessionDisplay.textContent = phien;
+              duDoanText.textContent = duDoan;
+              doTinCayText.textContent = doTinCay;
+          }
+
+          async function fetchAndDisplayPrediction() {
+              try {
+                  const res = await fetch(`${API_PROXY_URL}${encodeURIComponent(YOUR_API_URL)}?t=${new Date().getTime()}`, {
+                      cache: "no-store"
+                  });
+                  const data = await res.json();
+                  if (data && data.phien_sau && data.du_doan && data.do_tin_cay && data.phien_sau !== lastPhien) {
+                      lastPhien = data.phien_sau;
+                      
+                      setText("⌛ Đang phân tích...", "Đợi chút nhé...", "");
+                      setTimeout(() => {
+                          setText(`Phiên: #${data.phien_sau}`, `Dự đoán: ${data.du_doan.toUpperCase()}`, `Độ tin cậy: ${data.do_tin_cay}`);
+                          setTimeout(() => {
+                              setText("⌛ Chờ phiên mới...", "", "");
+                          }, DISPLAY_DURATION_MS);
+                      }, PROCESSING_DURATION_MS);
+
+                  }
+              } catch (e) {
+                  console.error("Lỗi API (bỏ qua):", e);
+              }
+          }
+          
+          fetchAndDisplayPrediction();
+          
+          setInterval(fetchAndDisplayPrediction, 3000);
+
+          refreshIcon.addEventListener('click', (event) => {
+              event.stopPropagation();
+              dragBox.classList.toggle('horizontal-layout');
+          });
+
+          // Logic kéo thả mới, được tối ưu hóa cho cả hai chế độ
+          let isDragging = false;
+          let offsetX = 0;
+          let offsetY = 0;
+
+          const getCoords = (e) => {
+              return e.touches ? { x: e.touches[0].clientX, y: e.touches[0].clientY } : { x: e.clientX, y: e.clientY };
+          };
+
+          const handleDragStart = (e) => {
+              isDragging = true;
+              const coords = getCoords(e);
+              const rect = dragBox.getBoundingClientRect();
+              
+              if (dragBox.classList.contains('horizontal-layout')) {
+                // Điều chỉnh offset cho chế độ ngang để tọa độ kéo thả khớp
+                const rotatedX = coords.x - rect.left;
+                const rotatedY = coords.y - rect.top;
+                offsetX = rotatedX;
+                offsetY = rotatedY;
+              } else {
+                // Logic kéo thả cho chế độ thẳng
+                offsetX = coords.x - rect.left;
+                offsetY = coords.y - rect.top;
+              }
+              
+              dragBox.style.transition = 'none';
+              dragBox.style.cursor = 'grabbing';
+          };
+
+          const handleDragMove = (e) => {
+              if (!isDragging) return;
+              e.preventDefault();
+              const coords = getCoords(e);
+
+              if (dragBox.classList.contains('horizontal-layout')) {
+                // Tính toán vị trí mới cho chế độ ngang
+                const newX = coords.x - offsetX;
+                const newY = coords.y - offsetY;
+                dragBox.style.left = `${newX}px`;
+                dragBox.style.top = `${newY}px`;
+              } else {
+                // Tính toán vị trí mới cho chế độ thẳng
+                dragBox.style.left = `${coords.x - offsetX}px`;
+                dragBox.style.top = `${coords.y - offsetY}px`;
+              }
+          };
+
+          const handleDragEnd = () => {
+              isDragging = false;
+              dragBox.style.transition = 'transform 0.8s ease-in-out';
+              dragBox.style.cursor = 'grab';
+          };
+
+          dragBox.addEventListener("mousedown", handleDragStart);
+          document.addEventListener("mousemove", handleDragMove);
+          document.addEventListener("mouseup", handleDragEnd);
+
+          dragBox.addEventListener("touchstart", handleDragStart, { passive: false });
+          document.addEventListener("touchmove", handleDragMove, { passive: false });
+          document.addEventListener("touchend", handleDragEnd);
+
+          document.addEventListener("keydown", function (e) {
+            if (
+              e.key === "F12" ||
+              (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J" || e.key === "C")) ||
+              (e.ctrlKey && e.key === "U")
+            ) {
+              e.preventDefault();
+            }
+          });
+          document.addEventListener("contextmenu", function (e) {
+            e.preventDefault();
+          });
+      }
+      
+      async function startPeriodicKeyCheck(username) {
+          setInterval(async () => {
+              try {
+                  const userDoc = await db.collection('users').doc(username).get();
+                  const userData = userDoc.data();
+                  
+                  if (!userDoc.exists || !userData.isActive || new Date(userData.expiryDate) < new Date()) {
+                      redirectToLogin();
+                  }
+              } catch (error) {
+                  console.error("Lỗi khi kiểm tra key định kỳ:", error);
+                  redirectToLogin();
+              }
+          }, 5000);
+      }
+      
+      initApp();
+    });
+  </script>
+</body>
+</html>

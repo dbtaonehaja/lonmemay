@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng Giá Key - PRO KEY</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&family=Fira+Code:wght@500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+      :root {
+        --bg-color: #080A0E;
+        --panel-bg: rgba(13, 17, 23, 0.9);
+        --accent-color: #00e0ff;
+        --text-color: #E6EDF3;
+        --text-color-secondary: #7d8590;
+        --border-color: rgba(0, 224, 255, 0.2);
+        --border-hover: rgba(0, 224, 255, 0.7);
+        --shadow-color: rgba(0, 224, 255, 0.4);
+        --success-color: #4CAF50;
+        --font-body: 'Poppins', sans-serif;
+        --font-title: 'Orbitron', sans-serif;
+        --font-mono: 'Fira Code', monospace;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes neonPulse {
+        0%, 100% { text-shadow: 0 0 5px var(--accent-color), 0 0 10px var(--accent-color), 0 0 15px var(--accent-color); }
+        50% { text-shadow: 0 0 2px var(--accent-color), 0 0 5px var(--accent-color), 0 0 10px var(--accent-color); }
+      }
+      body {
+        font-family: var(--font-body);
+        background-color: var(--bg-color);
+        background-image:
+          radial-gradient(circle, #1a2333 1px, transparent 1px),
+          radial-gradient(circle, #1a2333 1px, var(--bg-color) 1px);
+        background-size: 40px 40px;
+        background-position: 0 0, 20px 20px;
+        color: var(--text-color);
+        padding-top: 80px;
+        padding-bottom: 40px;
+        min-height: 100vh;
+      }
+      .top-bar {
+        position: fixed; top: 0; left: 0;
+        width: 100%; padding: 15px 5%;
+        background: rgba(8, 10, 14, 0.7);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border-color);
+        z-index: 100;
+        display: flex; justify-content: space-between; align-items: center;
+      }
+      .back-button { color: var(--text-color); text-decoration: none; font-size: 20px; transition: color 0.3s ease; }
+      .back-button:hover { color: var(--accent-color); }
+      .balance-display {
+        display: flex; align-items: center; gap: 10px;
+        background: rgba(0, 224, 255, 0.1);
+        padding: 8px 15px; border-radius: 20px;
+        font-family: var(--font-mono); font-size: 14px;
+      }
+      .balance-display strong { color: var(--success-color); }
+      #refresh-balance-btn { cursor: pointer; color: var(--accent-color); transition: transform 0.5s; }
+      #refresh-balance-btn.fa-spin { animation: fa-spin 1s infinite linear; }
+      
+      .container { max-width: 900px; width: 100%; margin: 0 auto; padding: 0 20px; animation: fadeIn 1s ease-out; }
+      .frame {
+        padding: 40px; border-radius: 20px;
+        background: var(--panel-bg);
+        border: 1px solid var(--border-color);
+        box-shadow: 0 0 50px rgba(0,0,0,0.5), 0 0 25px var(--shadow-color);
+      }
+      .main-title {
+        font-family: var(--font-title); text-align: center;
+        margin-bottom: 10px; font-size: 32px; text-transform: uppercase;
+        color: var(--accent-color); text-shadow: 0 0 10px var(--shadow-color);
+        animation: neonPulse 2s infinite alternate;
+      }
+      .subtitle { margin-bottom: 30px; opacity: 0.8; text-align: center; font-size: 16px; }
+      .key-options-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+      }
+      .key-option {
+        background-color: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+        overflow: hidden;
+      }
+      .key-option::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: radial-gradient(circle at top left, var(--accent-color) 0%, transparent 40%);
+        opacity: 0;
+        transition: all 0.6s ease;
+        transform: scale(0);
+      }
+      .key-option:hover::before {
+        opacity: 0.15;
+        transform: scale(1);
+      }
+      .key-option:hover {
+        border-color: var(--border-hover);
+        transform: translateY(-8px) scale(1.02);
+        background-color: rgba(56, 139, 253, 0.15);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+      }
+      .option-header {
+        margin-bottom: 15px;
+        position: relative;
+        z-index: 2;
+      }
+      .option-title {
+        font-family: var(--font-title);
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--accent-color);
+        margin-bottom: 5px;
+        text-shadow: 0 0 5px var(--shadow-color);
+      }
+      .option-subtitle {
+        font-size: 15px;
+        color: var(--text-color-secondary);
+        font-style: italic;
+      }
+      .option-price {
+        font-family: var(--font-mono);
+        font-size: 40px;
+        font-weight: 700;
+        color: var(--text-color);
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 2;
+      }
+      .option-price span {
+        font-size: 20px;
+        color: var(--text-color-secondary);
+      }
+      .option-details {
+        list-style-type: none;
+        padding: 0;
+        text-align: left;
+        width: 100%;
+        margin-bottom: 25px;
+        position: relative;
+        z-index: 2;
+      }
+      .option-details li {
+        font-size: 15px;
+        color: var(--text-color);
+        margin-bottom: 10px;
+      }
+      .option-details li i {
+        margin-right: 10px;
+        color: var(--accent-color);
+      }
+      .buy-button {
+        background: var(--accent-color);
+        color: var(--bg-color);
+        font-weight: 600;
+        padding: 15px 30px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 5px 15px rgba(0, 224, 255, 0.3);
+        position: relative;
+        z-index: 2;
+      }
+      .buy-button:hover {
+        background-color: #00B2D4;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 224, 255, 0.5);
+      }
+      .buy-button:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 5px rgba(0, 224, 255, 0.3);
+      }
+      @media (max-width: 768px) {
+        .key-options-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+</head>
+<body>
+    <header class="top-bar">
+      <a href="key.html" class="back-button" title="Quay lại"><i class="fas fa-arrow-left"></i></a>
+      <div class="balance-display">
+        <i class="fas fa-wallet" style="color:var(--text-color-secondary)"></i>
+        <span id="balance-amount">Đang tải...</span>
+        <i class="fas fa-sync-alt" id="refresh-balance-btn" title="Làm mới số dư"></i>
+      </div>
+    </header>
+
+    <div class="container">
+        <div class="frame">
+            <h2 class="main-title">BẢNG GIÁ KEY</h2>
+            <p class="subtitle">Nâng cấp trải nghiệm với các gói dịch vụ cao cấp</p>
+            <div class="key-options-grid">
+                <div class="key-option" data-package="Gói 1 Ngày" data-duration="1" data-price="35000">
+                    <div class="option-header">
+                        <div class="option-title">1 NGÀY</div>
+                        <div class="option-subtitle">Thử nghiệm</div>
+                    </div>
+                    <div class="option-price">35K</div>
+                    <ul class="option-details">
+                        <li><i class="fas fa-check-circle"></i>Truy cập đầy đủ tính năng</li>
+                        <li><i class="fas fa-check-circle"></i>Hỗ trợ tiêu chuẩn</li>
+                        <li><i class="fas fa-check-circle"></i>Dành cho người mới</li>
+                    </ul>
+                    <button class="buy-button">MUA NGAY</button>
+                </div>
+                
+                <div class="key-option" data-package="Gói 1 Tuần" data-duration="7" data-price="100000">
+                    <div class="option-header">
+                        <div class="option-title">1 TUẦN</div>
+                        <div class="option-subtitle">Gói phổ biến</div>
+                    </div>
+                    <div class="option-price">100K</div>
+                    <ul class="option-details">
+                        <li><i class="fas fa-check-circle"></i>Tiết kiệm hơn</li>
+                        <li><i class="fas fa-check-circle"></i>Ưu tiên hỗ trợ</li>
+                        <li><i class="fas fa-check-circle"></i>Cập nhật sớm</li>
+                    </ul>
+                    <button class="buy-button">MUA NGAY</button>
+                </div>
+
+                <div class="key-option" data-package="Gói 1 Tháng" data-duration="30" data-price="220000">
+                    <div class="option-header">
+                        <div class="option-title">1 THÁNG</div>
+                        <div class="option-subtitle">Nâng cấp VIP</div>
+                    </div>
+                    <div class="option-price">220K</div>
+                    <ul class="option-details">
+                        <li><i class="fas fa-check-circle"></i>Tối ưu chi phí</li>
+                        <li><i class="fas fa-check-circle"></i>Hỗ trợ 24/7</li>
+                        <li><i class="fas fa-check-circle"></i>Tính năng độc quyền</li>
+                    </ul>
+                    <button class="buy-button">MUA NGAY</button>
+                </div>
+
+                <div class="key-option" data-package="Gói Vĩnh Viễn" data-duration="36500" data-price="330000">
+                    <div class="option-header">
+                        <div class="option-title">VĨNH VIỄN</div>
+                        <div class="option-subtitle">Trọn đời</div>
+                    </div>
+                    <div class="option-price">330K</div>
+                    <ul class="option-details">
+                        <li><i class="fas fa-check-circle"></i>Sử dụng không giới hạn</li>
+                        <li><i class="fas fa-check-circle"></i>Tiết kiệm nhất</li>
+                        <li><i class="fas fa-check-circle"></i>Bao gồm mọi cập nhật</li>
+                    </ul>
+                    <button class="buy-button">MUA NGAY</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig = {
+    apiKey: "AIzaSyAXtM_AHMeg76S0VaxQTJ_e68qKg0KxKRk",
+    authDomain: "ma-my-7cb60.firebaseapp.com",
+    projectId: "ma-my-7cb60",
+    storageBucket: "ma-my-7cb60.firebasestorage.app",
+    messagingSenderId: "139387264637",
+    appId: "1:139387264637:web:5c296efe7d3bb97a2a5b14",
+    measurementId: "G-E6RHBS10QV"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+const swalConfig = {
+    background: 'rgba(22, 27, 34, 0.95)',
+    color: '#E6EDF3',
+    confirmButtonColor: '#3081F7',
+    confirmButtonText: 'Xác Nhận',
+    cancelButtonText: 'Hủy Bỏ'
+};
+
+function generateKey(length = 16) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result.match(/.{1,4}/g).join('-').toUpperCase();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    let userInfo = JSON.parse(localStorage.getItem('tool_user_info'));
+    if (!userInfo || !userInfo.username) { 
+        window.location.href = 'index.html'; 
+        return; 
+    }
+
+    const balanceDisplay = document.getElementById('balance-amount');
+
+    function updateBalanceUI(balance) {
+        balanceDisplay.innerHTML = `<strong>${(balance || 0).toLocaleString('vi-VN')} VNĐ</strong>`;
+    }
+  
+    async function refreshBalance() {
+        const refreshBtn = document.getElementById('refresh-balance-btn');
+        if(refreshBtn.classList.contains('fa-spin')) return;
+        refreshBtn.classList.add('fa-spin');
+        try {
+            const userDocRef = db.collection('users').doc(userInfo.username);
+            const doc = await userDocRef.get();
+            
+            if (doc.exists) {
+                userInfo = doc.data();
+                localStorage.setItem('tool_user_info', JSON.stringify(userInfo));
+                updateBalanceUI(userInfo.balance);
+                Swal.fire({ ...swalConfig, toast: true, position: 'top-end', icon: 'success', title: 'Đã cập nhật số dư!', showConfirmButton: false, timer: 1500 });
+            } else {
+                throw new Error('Không tìm thấy thông tin người dùng.');
+            }
+        } catch (error) { Swal.fire({ ...swalConfig, title:'Lỗi', text:`Không thể làm mới số dư: ${error.message}`, icon:'error'});
+        } finally { refreshBtn.classList.remove('fa-spin');
+        }
+    }
+    
+    updateBalanceUI(userInfo.balance);
+    document.getElementById('refresh-balance-btn').addEventListener('click', refreshBalance);
+
+    document.querySelectorAll('.key-option').forEach(option => {
+        option.querySelector('.buy-button').addEventListener('click', async (e) => {
+            e.stopPropagation();
+            const packageName = option.dataset.package;
+            const duration = parseInt(option.dataset.duration);
+            const price = parseInt(option.dataset.price);
+            
+            const confirmation = await Swal.fire({
+                ...swalConfig,
+                title: 'Xác nhận mua hàng',
+                html: `Bạn có chắc muốn mua "<b>${packageName}</b>" với giá <b style="color: var(--accent-color)">${price.toLocaleString('vi-VN')} VNĐ</b> không?`,
+                icon: 'question', showCancelButton: true
+            });
+            
+            if (confirmation.isConfirmed) {
+                Swal.fire({ ...swalConfig, title: 'Đang xử lý giao dịch...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+                try {
+                    const transactionResult = await db.runTransaction(async (transaction) => {
+                        const userDocRef = db.collection('users').doc(userInfo.username);
+                        const userDoc = await transaction.get(userDocRef);
+                        const userData = userDoc.data();
+
+                        if (userData.balance < price) {
+                            throw new Error('Số dư của bạn không đủ để thực hiện giao dịch này.');
+                        }
+
+                        let newKey = generateKey();
+                        let keyExists = (await db.collection('keys').doc(newKey).get()).exists;
+                        let retries = 0;
+                        while(keyExists && retries < 5) {
+                            newKey = generateKey();
+                            keyExists = (await db.collection('keys').doc(newKey).get()).exists;
+                            retries++;
+                        }
+                        if (keyExists) {
+                            throw new Error('Không thể tạo key mới, vui lòng thử lại.');
+                        }
+
+                        const newBalance = userData.balance - price;
+                        transaction.update(userDocRef, { balance: newBalance });
+
+                        const keyDocRef = db.collection('keys').doc(newKey);
+                        transaction.set(keyDocRef, {
+                            key: newKey,
+                            packageName,
+                            durationDays: duration,
+                            price,
+                            owner: userInfo.username,
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                            isUsed: false
+                        });
+
+                        const historyDocRef = db.collection('transactions').doc();
+                        transaction.set(historyDocRef, {
+                            username: userInfo.username,
+                            type: 'Mua Key',
+                            package: packageName,
+                            price,
+                            key: newKey,
+                            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+
+                        return { newBalance, key: newKey };
+                    });
+
+                    userInfo.balance = transactionResult.newBalance;
+                    localStorage.setItem('tool_user_info', JSON.stringify(userInfo));
+                    updateBalanceUI(userInfo.balance);
+                    
+                    await Swal.fire({
+                        ...swalConfig,
+                        title: 'Mua Thành Công!',
+                        html: `Key của bạn là: <br><b style="color: var(--success-color); user-select: all; font-size:1.2em; font-family: 'Fira Code', monospace;">${transactionResult.key}</b><br><br>Key đã được lưu vào lịch sử giao dịch.<br>Số dư hiện tại: <b>${transactionResult.newBalance.toLocaleString('vi-VN')} VNĐ</b>`,
+                        icon: 'success'
+                    });
+                    window.location.href = 'lichsu.html';
+                } catch (error) { Swal.fire({...swalConfig, title: 'Giao dịch thất bại!', text: error.message, icon: 'error'});
+                }
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>

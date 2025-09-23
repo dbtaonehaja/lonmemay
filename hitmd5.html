@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Dự Đoán LUCK8 VIP PRO</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #0a0a1a;
+            color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            background: radial-gradient(circle at center, #1a1a3a, #0a0a1a);
+            padding-top: 20px;
+        }
+
+        .container {
+            max-width: 450px;
+            width: 95%;
+            margin: 0 auto;
+            background: rgba(18, 18, 36, 0.8);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 255, 0.5);
+            margin-top: 60px;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(45deg, #00ffff, #ff00ff, #00ff00, #ff00ff);
+            background-size: 400%;
+            border-radius: 25px;
+            z-index: -1;
+            animation: gradientBorder 15s linear infinite;
+        }
+
+        @keyframes gradientBorder {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h2 {
+            text-align: center;
+            color: #00e5ff;
+            margin: 10px 0 20px;
+            text-shadow: 0 0 15px #00e5ff;
+            font-size: 28px;
+            letter-spacing: 2px;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.1);
+        }
+
+        .circle-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #111122;
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            border: 3px solid #00c4ff;
+            box-shadow: 0 0 25px #00c4ff, inset 0 0 15px #00c4ff;
+            animation: pulse 2.5s infinite alternate;
+            margin-bottom: 10px;
+        }
+
+        @keyframes pulse {
+            from { box-shadow: 0 0 15px #00c4ff, inset 0 0 10px #00c4ff; }
+            to { box-shadow: 0 0 35px #00ffff, inset 0 0 20px #00ffff; }
+        }
+
+        .status-text, .time-text {
+            text-align: center;
+            font-size: 15px;
+            color: #b0b0d0;
+            margin-top: 5px;
+        }
+
+        .status-text {
+            font-size: 18px;
+            font-weight: bold;
+            color: #00ffc4;
+            text-shadow: 0 0 5px #00ffc4;
+        }
+
+        .history-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #ff9900;
+            text-shadow: 0 0 10px #ff9900;
+            font-size: 20px;
+        }
+        
+        .history-table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+            font-size: 14px;
+            min-width: 400px;
+        }
+
+        th, td {
+            padding: 10px 5px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.03);
+            white-space: nowrap;
+        }
+        
+        th {
+            background: rgba(0, 255, 255, 0.1);
+            color: #00e1ff;
+            text-shadow: 0 0 5px #00e1ff;
+            font-weight: bold;
+            border-radius: 5px 5px 0 0;
+        }
+
+        td {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        tr:first-child td { border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        tr:last-child td { border-bottom: none; }
+
+        tr:hover {
+            background: rgba(0, 255, 255, 0.08);
+        }
+
+        .tai, .xiu {
+            display: inline-block;
+            min-width: 50px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .tai {
+            background: linear-gradient(45deg, #00ff8c, #00b359);
+            color: #000;
+            box-shadow: 0 0 15px rgba(0, 255, 140, 0.6);
+        }
+
+        .xiu {
+            background: linear-gradient(45deg, #ff4c4c, #cc0000);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(255, 76, 76, 0.6);
+        }
+
+        .win { color: #00ff00; font-weight: bold; text-shadow: 0 0 5px #00ff00; }
+        .lose { color: #ff3333; font-weight: bold; text-shadow: 0 0 5px #ff3333; }
+        .pending { color: #999; }
+
+        /* CSS cho nút quay lại */
+        .back-button {
+          position: fixed;
+          top: 20px;
+          left: 20px;
+          z-index: 99999;
+          background: rgba(255, 255, 255, 0.1);
+          border: 2px solid rgba(255, 255, 255, 0.2);
+          border-radius: 12px;
+          padding: 10px 15px;
+          color: #fff;
+          font-weight: bold;
+          font-size: 16px;
+          text-decoration: none;
+          backdrop-filter: blur(10px);
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        .back-button:hover {
+          transform: scale(1.05);
+          box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <a href="menu.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Quay lại
+    </a>
+    <div class="container">
+        <h2>DỰ ĐOÁN HIT TX<br/>LXK</h2>
+        
+        <div class="section circle-container">
+            <div class="status-text" id="phien">#------</div>
+            <div class="circle" id="prediction">...</div>
+            <div class="status-text" id="status">Đang chờ phiên mới...</div>
+            <div class="time-text" id="clock">--:--:--</div>
+        </div>
+
+        <div class="section">
+            <div class="history-title">Lịch sử kết quả:</div>
+            <div class="history-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Phiên</th>
+                            <th>Dự đoán</th>
+                            <th>Kết quả</th>
+                            <th>Đánh giá</th>
+                            <th>Thời gian</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAXtM_AHMeg76S0VaxQTJ_e68qKg0KxKRk",
+            authDomain: "ma-my-7cb60.firebaseapp.com",
+            projectId: "ma-my-7cb60",
+            storageBucket: "ma-my-7cb60.firebasestorage.app",
+            messagingSenderId: "139387264637",
+            appId: "1:139387264637:web:5c296efe7d3bb97a2a5b14",
+            measurementId: "G-E6RHBS10QV"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        async function checkUserAndKey() {
+            const userInfo = JSON.parse(localStorage.getItem('tool_user_info'));
+            
+            if (!userInfo || !userInfo.username) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            try {
+                const userDoc = await db.collection('users').doc(userInfo.username).get();
+                const userData = userDoc.data();
+                
+                if (!userDoc.exists || !userData.isActive || new Date(userData.expiryDate) < new Date()) {
+                    window.location.href = 'index.html';
+                    return;
+                }
+
+                startToolFunctions();
+                startPeriodicKeyCheck(userInfo.username);
+                
+            } catch (error) {
+                console.error("Lỗi khi kiểm tra key:", error);
+                window.location.href = 'index.html';
+            }
+        }
+
+        function startToolFunctions() {
+            const apiProxyUrl = "https://api.allorigins.win/raw?url=";
+            const apiTargetUrl = "https://md5sextoy.onrender.com/api/2k15";
+            
+            let historyList = [];
+
+            function formatKetQua(text) {
+                return text?.trim().toLowerCase() === "tài"
+                    ? `<span class="tai">Tài</span>`
+                    : text?.trim().toLowerCase() === "xỉu"
+                    ? `<span class="xiu">Xỉu</span>`
+                    : `<span class="pending">--</span>`;
+            }
+
+            function formatDanhGia(danhGia, duDoan, ketQua) {
+                if (danhGia) {
+                    return danhGia === 'win' ? `<span class="win">✔ Thắng</span>` : `<span class="lose">✘ Thua</span>`;
+                }
+                if (ketQua?.toLowerCase() !== '--' && duDoan?.toLowerCase() !== '--') {
+                    return duDoan?.toLowerCase() === ketQua?.toLowerCase() ? `<span class="win">✔ Thắng</span>` : `<span class="lose">✘ Thua</span>`;
+                }
+                return `<span class="pending">Đang chờ...</span>`;
+            }
+
+            async function fetchData() {
+                try {
+                    // Thêm tham số ngẫu nhiên để bỏ qua cache
+                    const finalUrl = apiProxyUrl + encodeURIComponent(`${apiTargetUrl}?_t=${new Date().getTime()}`);
+                    
+                    const res = await fetch(finalUrl);
+                    const data = await res.json();
+                    
+                    if (!data || !data.phien_sau || !data.du_doan) {
+                        console.warn("Dữ liệu API không đầy đủ.");
+                        return;
+                    }
+
+                    const phien_hien_tai = data.phien_sau;
+                    const duDoan = data.du_doan;
+                    const ketQua_truoc = data.ket_qua;
+                    const phien_truoc = data.phien_truoc;
+                    const thoigian = new Date().toLocaleTimeString("vi-VN");
+                    
+                    // Cập nhật thông tin hiển thị chính
+                    document.getElementById("phien").innerText = `#${phien_hien_tai}`;
+                    document.getElementById("clock").innerText = thoigian;
+                    document.getElementById("status").innerText = "Đã có dự đoán!";
+                    document.getElementById("prediction").innerHTML = formatKetQua(duDoan);
+
+                    // Xử lý lịch sử
+                    const phienMoi = {
+                        phien: phien_hien_tai,
+                        duDoan: duDoan,
+                        ketQua: "--",
+                        danhGia: null,
+                        thoigian: thoigian
+                    };
+
+                    const isNewPhienExists = historyList.some(item => item.phien === phien_hien_tai);
+                    if (!isNewPhienExists) {
+                        historyList.unshift(phienMoi);
+                        if (historyList.length > 30) historyList.pop();
+                    }
+
+                    const phienTruocIndex = historyList.findIndex(item => item.phien === phien_truoc);
+                    if (phienTruocIndex !== -1 && historyList[phienTruocIndex].ketQua === "--") {
+                        historyList[phienTruocIndex].ketQua = ketQua_truoc;
+                        const duDoanTruoc = historyList[phienTruocIndex].duDoan;
+                        historyList[phienTruocIndex].danhGia = (duDoanTruoc.toLowerCase() === ketQua_truoc.toLowerCase()) ? 'win' : 'lose';
+                    }
+
+                    // Sắp xếp lại lịch sử theo số phiên giảm dần để đảm bảo thứ tự
+                    historyList.sort((a, b) => parseInt(b.phien) - parseInt(a.phien));
+                    
+                    renderHistory();
+
+                } catch (err) {
+                    console.error("Lỗi kết nối hoặc xử lý dữ liệu:", err);
+                }
+            }
+
+            function renderHistory() {
+                const tbody = document.getElementById("history");
+                tbody.innerHTML = "";
+                historyList.forEach(item => {
+                    const danhGia = formatDanhGia(item.danhGia, item.duDoan, item.ketQua);
+                    const ketQua = item.ketQua === "--" ? `<span class="pending">--</span>` : formatKetQua(item.ketQua);
+
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${item.phien}</td>
+                        <td>${formatKetQua(item.duDoan)}</td>
+                        <td>${ketQua}</td>
+                        <td>${danhGia}</td>
+                        <td>${item.thoigian}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+            
+            fetchData();
+            setInterval(fetchData, 1000);
+        }
+
+        async function startPeriodicKeyCheck(username) {
+            setInterval(async () => {
+                try {
+                    const userDoc = await db.collection('users').doc(username).get();
+                    const userData = userDoc.data();
+                    
+                    if (!userDoc.exists || !userData.isActive || new Date(userData.expiryDate) < new Date()) {
+                        window.location.href = 'index.html';
+                    }
+                } catch (error) {
+                    console.error("Lỗi khi kiểm tra key định kỳ:", error);
+                    window.location.href = 'index.html';
+                }
+            }, 5000);
+        }
+        
+        checkUserAndKey();
+    </script>
+</body>
+</html>
+

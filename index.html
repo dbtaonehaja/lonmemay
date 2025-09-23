@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng Nhập Tool ⚡</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&family=Fira+Code:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+      :root {
+        --bg-color: #0D1117;
+        --panel-bg: rgba(22, 27, 34, 0.8);
+        --accent-color: #3081F7;
+        --text-color: #E6EDF3;
+        --text-color-secondary: #7d8590;
+        --border-color: rgba(56, 139, 253, 0.3);
+        --border-hover: rgba(56, 139, 253, 0.7);
+        --shadow-color: rgba(56, 139, 253, 0.5);
+        --success-color: #238636;
+        --danger-color: #DA3633;
+        --font-body: 'Poppins', sans-serif;
+        --font-title: 'Orbitron', sans-serif;
+        --font-mono: 'Fira Code', monospace;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-15px); } }
+      @keyframes pulseGlow {
+        0%, 100% { text-shadow: 0 0 4px var(--accent-color); color: var(--accent-color); }
+        50% { text-shadow: 0 0 10px var(--accent-color); color: white; }
+      }
+      body {
+        font-family: var(--font-body);
+        background-color: var(--bg-color);
+        background-image: url('https://i.postimg.cc/yYmj6vYd/1758217953804.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: var(--text-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+      .container {
+        width: 100%;
+        max-width: 400px;
+        padding: 20px;
+        animation: fadeIn 0.8s ease-out forwards;
+      }
+      .login-frame {
+        background: var(--panel-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 35px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 50px rgba(0,0,0,0.5), 0 0 25px var(--shadow-color);
+      }
+      .main-title {
+        font-family: var(--font-title);
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 24px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        animation: pulseGlow 4s ease-in-out infinite;
+      }
+      .input-group {
+        position: relative;
+        margin-bottom: 25px;
+      }
+      .input-group .input-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-color-secondary);
+        transition: color 0.3s ease;
+      }
+      .input-field {
+        width: 100%;
+        padding: 12px 15px 12px 45px;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        font-family: var(--font-body);
+        font-size: 15px;
+        background: rgba(13, 17, 23, 0.5);
+        color: var(--text-color);
+        transition: all 0.3s ease;
+      }
+      .input-field:focus {
+        border-color: var(--border-hover);
+        box-shadow: 0 0 10px var(--shadow-color);
+        outline: none;
+      }
+      .input-field:focus + .input-icon {
+        color: var(--accent-color);
+      }
+      .toggle-password {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: var(--text-color-secondary);
+        transition: color 0.3s ease;
+      }
+      .toggle-password:hover { color: var(--accent-color); }
+      .submit-btn {
+        width: 100%;
+        padding: 12px;
+        margin-top: 10px;
+        border-radius: 8px;
+        border: none;
+        font-weight: 600;
+        font-family: var(--font-title);
+        font-size: 16px;
+        cursor: pointer;
+        color: #fff;
+        text-transform: uppercase;
+        background-color: var(--accent-color);
+        box-shadow: 0 4px 15px -5px var(--shadow-color);
+        transition: all 0.3s ease;
+      }
+      .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px -5px var(--shadow-color);
+      }
+      .form-links {
+        text-align: center;
+        margin-top: 25px;
+        font-size: 14px;
+      }
+      .form-links a {
+        color: var(--accent-color);
+        text-decoration: none;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .form-links a:hover {
+        text-decoration: underline;
+        color: #fff;
+      }
+      @media (max-width: 768px) {
+        .login-frame { padding: 25px; }
+        .main-title { font-size: 20px; }
+      }
+    </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="login-frame">
+    <div id="login-view">
+      <h2 class="main-title"><i class="fas fa-shield-alt"></i> Secure Login <i class="fas fa-shield-alt"></i></h2>
+      <div class="input-group">
+        <input type="text" id="loginUser" class="input-field" placeholder="Tên đăng nhập" onkeyup="if(event.key === 'Enter') loginUser()">
+        <i class="fas fa-user-astronaut input-icon"></i>
+      </div>
+      <div class="input-group">
+        <input type="password" id="loginPass" class="input-field" placeholder="Mật khẩu" onkeyup="if(event.key === 'Enter') loginUser()">
+        <i class="fas fa-key input-icon"></i>
+        <i class="fas fa-eye toggle-password" onclick="togglePassword('loginPass', this)"></i>
+      </div>
+      <button class="submit-btn" onclick="loginUser()"><i class="fas fa-rocket"></i> Đăng Nhập</button>
+      <div class="form-links">
+        <a onclick="toggleView()">Chưa có tài khoản? Đăng ký</a>
+      </div>
+    </div>
+    <div id="register-view" style="display:none;">
+      <h2 class="main-title"><i class="fas fa-user-plus"></i> Tạo Tài Khoản <i class="fas fa-atom"></i></h2>
+      <div class="input-group">
+        <input type="text" id="registerUser" class="input-field" placeholder="Tên đăng nhập mong muốn" onkeyup="if(event.key === 'Enter') registerUser()">
+        <i class="fas fa-user-astronaut input-icon"></i>
+      </div>
+      <div class="input-group">
+        <input type="password" id="registerPass" class="input-field" placeholder="Mật khẩu (ít nhất 6 ký tự)" onkeyup="if(event.key === 'Enter') registerUser()">
+        <i class="fas fa-key input-icon"></i>
+        <i class="fas fa-eye toggle-password" onclick="togglePassword('registerPass', this)"></i>
+      </div>
+      <div class="input-group">
+        <input type="password" id="registerConfirmPass" class="input-field" placeholder="Xác nhận lại mật khẩu" onkeyup="if(event.key === 'Enter') registerUser()">
+        <i class="fas fa-check-double input-icon"></i>
+        <i class="fas fa-eye toggle-password" onclick="togglePassword('registerConfirmPass', this)"></i>
+      </div>
+      <button class="submit-btn" onclick="registerUser()"><i class="fas fa-user-check"></i> Đăng Ký</button>
+      <div class="form-links">
+        <a onclick="toggleView()">Đã có tài khoản? Đăng nhập</a>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
+<script>
+    // =================================================================
+    // Cấu hình Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyAXtM_AHMeg76S0VaxQTJ_e68qKg0KxKRk",
+        authDomain: "ma-my-7cb60.firebaseapp.com",
+        projectId: "ma-my-7cb60",
+        storageBucket: "ma-my-7cb60.firebasestorage.app",
+        messagingSenderId: "139387264637",
+        appId: "1:139387264637:web:5c296efe7d3bb97a2a5b14",
+        measurementId: "G-E6RHBS10QV"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    // =================================================================
+
+function getSwalStyle() {
+  return {
+    background: 'rgba(22, 27, 34, 0.95)',
+    color: '#E6EDF3',
+    confirmButtonColor: '#3081F7',
+    confirmButtonText: 'Đồng Ý',
+    cancelButtonText: 'Hủy Bỏ',
+    backdrop: `rgba(0,0,0,0.7) backdrop-filter: blur(5px);`
+  };
+}
+
+function togglePassword(inputId, iconElement) {
+  const input = document.getElementById(inputId);
+  input.type = input.type === 'password' ? 'text' : 'password';
+  iconElement.classList.toggle('fa-eye');
+  iconElement.classList.toggle('fa-eye-slash');
+}
+
+function toggleView() {
+  const loginView = document.getElementById('login-view');
+  const registerView = document.getElementById('register-view');
+  const isLoginVisible = loginView.style.display !== 'none';
+
+  if (isLoginVisible) {
+    loginView.style.animation = 'fadeOut 0.3s forwards';
+    setTimeout(() => {
+      loginView.style.display = 'none';
+      registerView.style.display = 'block';
+      registerView.style.animation = 'fadeIn 0.3s forwards';
+    }, 300);
+  } else {
+    registerView.style.animation = 'fadeOut 0.3s forwards';
+    setTimeout(() => {
+      registerView.style.display = 'none';
+      loginView.style.display = 'block';
+      loginView.style.animation = 'fadeIn 0.3s forwards';
+    }, 300);
+  }
+}
+
+async function registerUser() {
+  const username = document.getElementById('registerUser').value.trim();
+  const password = document.getElementById('registerPass').value.trim();
+  const confirmPassword = document.getElementById('registerConfirmPass').value.trim();
+  
+  if (!username || !password || !confirmPassword) {
+    Swal.fire({ ...getSwalStyle(), icon: 'warning', title: 'Lỗi', text: 'Vui lòng điền đầy đủ thông tin!' });
+    return;
+  }
+  if (password.length < 6) {
+    Swal.fire({ ...getSwalStyle(), icon: 'warning', title: 'Lỗi', text: 'Mật khẩu phải có ít nhất 6 ký tự!' });
+    return;
+  }
+  if (password !== confirmPassword) {
+    Swal.fire({ ...getSwalStyle(), icon: 'error', title: 'Lỗi', text: 'Mật khẩu xác nhận không khớp!' });
+    return;
+  }
+
+  try {
+    const userRef = db.collection('users').doc(username);
+    const userDoc = await userRef.get();
+
+    if (userDoc.exists) {
+      Swal.fire({ ...getSwalStyle(), icon: 'error', title: 'Thất bại', text: 'Tên đăng nhập đã tồn tại!' });
+      return;
+    }
+
+    await userRef.set({
+      username: username,
+      password: password, // Lưu mật khẩu dưới dạng văn bản thuần túy, cần mã hóa trong thực tế
+      balance: 0,
+      isActive: false,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    Swal.fire({ ...getSwalStyle(), icon: 'success', title: 'Thành công!', text: 'Đăng ký tài khoản thành công.' }).then(() => {
+      toggleView();
+      document.getElementById('loginUser').value = username;
+      document.getElementById('loginPass').value = '';
+      document.getElementById('loginPass').focus();
+    });
+
+  } catch (error) {
+    Swal.fire({ ...getSwalStyle(), icon: 'error', title: 'Lỗi hệ thống', text: `Đăng ký thất bại: ${error.message}` });
+  }
+}
+
+async function loginUser() {
+  const username = document.getElementById('loginUser').value.trim();
+  const password = document.getElementById('loginPass').value.trim();
+  
+  if (!username || !password) {
+    Swal.fire({ ...getSwalStyle(), icon: 'warning', title: 'Lỗi', text: 'Vui lòng nhập đầy đủ!' });
+    return;
+  }
+  
+  try {
+    const userRef = db.collection('users').doc(username);
+    const userDoc = await userRef.get();
+
+    if (userDoc.exists && userDoc.data().password === password) {
+      localStorage.setItem('tool_user_info', JSON.stringify(userDoc.data()));
+
+      Swal.fire({ 
+        ...getSwalStyle(), 
+        icon: 'success', 
+        title: 'Đăng nhập thành công!', 
+        timer: 1000, 
+        showConfirmButton: false 
+      }).then(() => {
+        window.location.href = 'key.html';
+      });
+    } else {
+      Swal.fire({ ...getSwalStyle(), icon: 'error', title: 'Lỗi', text: 'Sai tên đăng nhập hoặc mật khẩu.' });
+    }
+  } catch (error) {
+    Swal.fire({ ...getSwalStyle(), icon: 'error', title: 'Lỗi hệ thống', text: `Đăng nhập thất bại: ${error.message}` });
+  }
+}
+</script>
+
+</body>
+</html>
