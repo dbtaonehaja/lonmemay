@@ -22,19 +22,19 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     
-    // H�m chuyn hng nhanh
+    // Hàm chuyển hướng nhanh
     function redirectToIndex() {
-        // S dng replace  ngn ngi d�ng quay li trang tool bng n�t Back
+        // Sử dụng replace để ngăn người dùng quay lại trang tool bằng nút Back
         window.location.replace('index.html');
     }
 
     async function checkUserStatusAndRedirect() {
-        // Mc nh n body  tr�nh ni dung hin th trc khi check key
+        // Mặc định ẩn body để tránh nội dung hiển thị trước khi check key
         document.body.style.display = 'none'; 
         
         const userInfo = JSON.parse(localStorage.getItem('tool_user_info'));
         
-        // Trng hp 1: Key cha nhp (kh�ng c� userInfo)
+        // Trường hợp 1: Key chưa nhập (không có userInfo)
         if (!userInfo || !userInfo.username) {
             redirectToIndex();
             return;
@@ -44,9 +44,9 @@
             const userDoc = await db.collection('users').doc(userInfo.username).get();
             const userData = userDoc.data();
             const now = new Date();
-            const expiryDate = userData?.expiryDate ? new Date(userData.expiryDate) : new Date(0); // Ly hn s dng
+            const expiryDate = userData?.expiryDate ? new Date(userData.expiryDate) : new Date(0); // Lấy hạn sử dụng
 
-            // Trng hp 2: Key kh�ng tn ti, b v� hiu ho�, hoc ht hn
+            // Trường hợp 2: Key không tồn tại, bị vô hiệu hoá, hoặc hết hạn
             if (!userDoc.exists || !userData.isActive || expiryDate < now) {
                 localStorage.clear();
                 sessionStorage.clear();
@@ -54,13 +54,13 @@
                 return;
             }
             
-            // Nu Key hp l: Hin ni dung v� bt u kim tra nh k
+            // Nếu Key hợp lệ: Hiện nội dung và bắt đầu kiểm tra định kỳ
             document.body.style.display = 'block';
             startPeriodicKeyCheck(userInfo.username);
             
         } catch (error) {
-            console.error("Li khi kim tra key:", error);
-            // Li kt ni Firebase (chuyn hng an to�n)
+            console.error("Lỗi khi kiểm tra key:", error);
+            // Lỗi kết nối Firebase (chuyển hướng an toàn)
             redirectToIndex();
         }
     }
@@ -73,19 +73,19 @@
                 const now = new Date();
                 const expiryDate = userData?.expiryDate ? new Date(userData.expiryDate) : new Date(0);
 
-                // Nu key b v� hiu ho� gia chng hoc ht hn
+                // Nếu key bị vô hiệu hoá giữa chừng hoặc hết hạn
                 if (!userDoc.exists || !userData.isActive || expiryDate < now) {
                     localStorage.clear();
                     sessionStorage.clear();
                     redirectToIndex();
                 }
             } catch (error) {
-                console.error("Li kim tra key nh k:", error);
+                console.error("Lỗi kiểm tra key định kỳ:", error);
             }
-        }, 5000); // Kim tra mi 5 gi�y
+        }, 5000); // Kiểm tra mỗi 5 giây
     }
     
-    // Chy h�m kim tra ngay khi DOM c ti
+    // Chạy hàm kiểm tra ngay khi DOM được tải
     document.addEventListener('DOMContentLoaded', checkUserStatusAndRedirect);
   </script>
   <style>
@@ -95,11 +95,11 @@
       font-family:'Share Tech Mono',monospace;
       background:radial-gradient(circle at 10% 10%, rgba(0,0,0,0.6), rgba(0,0,0,1));
       color:#00ff00;height:100vh;overflow:hidden;
-      /* Mc nh n, JS s iu chnh display */
+      /* Mặc định ẩn, JS sẽ điều chỉnh display */
       display: none; 
     }
 
-    /* � b phn overlay chn game */
+    /* Đã bỏ phần overlay chọn game */
     .overlay { display: none; }
 
     /* iframe behind UI */
@@ -125,7 +125,7 @@
       background:linear-gradient(90deg,#2b0000,#700000);color:#fff;border:1px solid #ff3b3b;
     }
 
-    /* === Khung nh�y v� hiu ng MI � c thay th === */
+    /* === Khung nháy và hiu ng MI ã c thay th === */
     .prediction-box {
         position: fixed;
         bottom: 100px;
@@ -177,21 +177,21 @@
 <body>
   <iframe id="fullscreenIframe" src="https://68gbvn25.net/?code=10439446" name="fullscreenIframe"></iframe>
   <div class="panel">
-    <button id="activateBtn" class="btn">K�ch Hot</button>
-    <button id="logoutBtn" class="btn logout-btn">Tho�t Game</button>
+    <button id="activateBtn" class="btn">Kích Hoạt</button>
+    <button id="logoutBtn" class="btn logout-btn">Thoát Game</button>
   </div>
   
   <div id="predictionPopup" class="prediction-box" role="dialog" aria-hidden="true">
     <div class="item">
-        <span class="label">T�I</span>
+        <span class="label">TÀI</span>
         <div id="taiCircle" class="circle tai"></div>
     </div>
     <img src="https://i.postimg.cc/QCPw2tx5/68gamebai-logo.webp" alt="Logo" class="logo">
     <div class="item">
-        <span class="label">XU</span>
+        <span class="label">XỈU</span>
         <div id="xiuCircle" class="circle xiu"></div>
     </div>
-    <span class="close-btn"></span>
+    <span class="close-btn">✖</span>
   </div>
 
   <div class="footer-text">
@@ -205,7 +205,7 @@
   const logoutBtn = document.getElementById('logoutBtn');
   const predictionPopup = document.getElementById('predictionPopup');
   
-  // Ly c�c v�ng tr�n t pop-up mi
+  // Lấy các vòng tròn từ pop-up mới
   const taiCircle = document.getElementById('taiCircle');
   const xiuCircle = document.getElementById('xiuCircle');
   const closePopup = predictionPopup.querySelector('.close-btn');
@@ -230,7 +230,7 @@
 
   /* --- Logout Logic --- */
   logoutBtn.addEventListener('click', () => {
-    // Chuyn hng n trang 'menu.html'
+    // Chuyển hướng đến trang 'menu.html'
     window.location.href = 'menu.html';
   });
 
@@ -245,7 +245,7 @@
     if (lastResults.length > maxResults) {
         lastResults.shift();
     }
-    console.log("Lch s kt qu:", lastResults);
+    console.log("Lịch sử kết quả:", lastResults);
 
     setTimeout(() => {
         let predictedResult;
@@ -255,18 +255,18 @@
             if (mau_cau_dep.includes(recentPattern)) {
                 const lastChar = recentPattern.slice(-1);
                 predictedResult = (lastChar === "T") ? "T" : "X";
-                console.log("D o�n theo Mu p:", predictedResult);
+                console.log("Dự đoán theo Mẫu đẹp:", predictedResult);
             } else if (mau_cau_xau.includes(recentPattern)) {
                 const lastChar = recentPattern.slice(-1);
                 predictedResult = (lastChar === "T") ? "X" : "T";
-                console.log("D o�n theo Mu xu:", predictedResult);
+                console.log("Dự đoán theo Mẫu xấu:", predictedResult);
             } else {
                 predictedResult = Math.random() < 0.5 ? "T" : "X";
-                console.log("D o�n Ngu nhi�n:", predictedResult);
+                console.log("Dự đoán Ngẫu nhiên:", predictedResult);
             }
         } else {
             predictedResult = Math.random() < 0.5 ? "T" : "X";
-            console.log("D o�n Ngu nhi�n (cha  d liu):", predictedResult);
+            console.log("Dự đoán Ngẫu nhiên (chưa đủ dữ liệu):", predictedResult);
         }
 
         const targetCircle = (predictedResult === 'T') ? taiCircle : xiuCircle;
@@ -307,7 +307,7 @@
 
     predictionPopup.style.display = 'flex';
     activateBtn.disabled = true;
-    activateBtn.textContent = 'ang chy...';
+    activateBtn.textContent = 'Đang chạy...';
 
     runPredictionCycle();
     cycleIntervalId = setInterval(runPredictionCycle, 60000);
@@ -319,12 +319,12 @@
       clearInterval(cycleIntervalId);
       cycleIntervalId = null;
       activateBtn.disabled = false;
-      activateBtn.textContent = 'K�ch Hot';
+      activateBtn.textContent = 'Kích Hoạt';
       stopBlink();
     }
   });
 
-  /* === Logic K�o th (GI NGUY�N) === */
+  /* === Logic Kéo thả (GIỮ NGUYÊN) === */
   (function makeDraggable(el){
     let startX = 0, startY = 0, initX = 0, initY = 0;
     
@@ -336,7 +336,7 @@
         
         const style = window.getComputedStyle(el);
         
-        // Cn t�nh to�n li v tr� ban u v� c� transform: translateX(-50%)
+        // Cần tính toán lại vị trí ban đầu vì có transform: translateX(-50%)
         let currentLeft = style.left === 'auto' ? el.offsetLeft : parseFloat(style.left);
         let currentTop = style.top === 'auto' ? el.offsetTop : parseFloat(style.top);
         
@@ -359,7 +359,7 @@
         let clientX = e.type.includes("touch") ? e.touches[0].clientX : e.clientX;
         let clientY = e.type.includes("touch") ? e.touches[0].clientY : e.clientY;
         
-        // V� hiu h�a transform: translateX(-50%) khi ang k�o
+        // Vô hiệu hóa transform: translateX(-50%) khi đang kéo
         el.style.transform = 'none'; 
         
         el.style.left = (initX + (clientX - startX)) + "px";
@@ -382,4 +382,5 @@
   })(predictionPopup);
   </script>
 </body>
-</html>
+  </html>
+  
