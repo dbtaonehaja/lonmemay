@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bảng Điều Khiển - Cyber</title>
+    <title>Bảng Điều Khiển - Cosmic Byte</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto+Mono:wght@400;500;600&family=Oxanium:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Share+Tech+Mono&family=Oxanium:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         (function() {
@@ -51,157 +51,182 @@
         })();
     </script>
     <style>
+      /* --- VIP PRO COSMIC BYTE STYLES --- */
       :root {
-        --bg-color: #0A0A10;
-        --panel-bg: rgba(18, 22, 28, 0.85);
-        --accent-color: #00FFC2;
-        --accent-glow: rgba(0, 255, 194, 0.6);
-        --text-color: #F0F2F5;
-        --text-color-secondary: #8892B0;
-        --border-color: rgba(0, 255, 194, 0.2);
-        --border-hover: rgba(0, 255, 194, 0.7);
-        --shadow-color: rgba(0, 255, 194, 0.4);
-        --success-color: #72FF6B;
-        --success-glow: rgba(114, 255, 107, 0.6);
-        --danger-color: #FF5E5E;
-        --danger-glow: rgba(255, 94, 94, 0.5);
-        --warning-color: #FFEA00;
-        --warning-glow: rgba(255, 234, 0, 0.5);
-        --font-body: 'Roboto Mono', monospace;
-        --font-title: 'Oxanium', cursive;
-        --font-mono: 'Roboto Mono', monospace;
+        --bg-color: #010409;
+        --panel-bg: rgba(10, 15, 25, 0.95);
+        --accent-blue: #00BFFF; /* Xanh Cyber */
+        --accent-pink: #FF007F; /* Hồng Neon */
+        --text-color: #E6F0FF;
+        --text-secondary: #8B949E;
+        --border-color: rgba(0, 191, 255, 0.3);
+        --shadow-glow: rgba(0, 191, 255, 0.6);
+        --success-color: #39FF14;
+        --danger-color: #FF3333;
+        --font-body: 'Share Tech Mono', monospace;
+        --font-title: 'Orbitron', sans-serif;
         --sidebar-width: 280px;
+        --transition-speed: 0.3s;
       }
       * { margin: 0; padding: 0; box-sizing: border-box; }
       @keyframes neonPulse {
-        0%, 100% { text-shadow: 0 0 5px var(--accent-glow), 0 0 10px var(--accent-glow), 0 0 15px var(--accent-glow); }
-        50% { text-shadow: 0 0 2px var(--accent-glow), 0 0 5px var(--accent-glow), 0 0 10px var(--accent-glow); }
+        0%, 100% { text-shadow: 0 0 5px var(--accent-blue), 0 0 10px var(--accent-blue), 0 0 15px var(--accent-blue); }
+        50% { text-shadow: 0 0 2px var(--accent-blue), 0 0 5px var(--accent-blue), 0 0 10px var(--accent-blue); }
       }
-      @keyframes flicker {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.8; }
-      }
-      @keyframes backgroundGrid {
-        from { background-position: 0 0, 0 0; }
-        to { background-position: 100vw 100vh, 50vw 50vh; }
+      @keyframes backgroundMatrix {
+        from { background-position: 0 0; }
+        to { background-position: 100vw 100vh; }
       }
       body {
         font-family: var(--font-body);
         background-color: var(--bg-color);
         background-image:
-          linear-gradient(to right, rgba(0,255,194,0.05) 1px, transparent 1px),
-          linear-gradient(to bottom, rgba(0,255,194,0.05) 1px, transparent 1px);
-        background-size: 50px 50px;
+          linear-gradient(to right, rgba(0, 191, 255, 0.05) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(0, 191, 255, 0.05) 1px, transparent 1px);
+        background-size: 40px 40px;
         color: var(--text-color);
         display: flex;
         justify-content: center;
         align-items: center;
         min-height: 100vh;
         overflow-x: hidden;
-        animation: backgroundGrid 120s linear infinite;
+        animation: backgroundMatrix 120s linear infinite;
       }
-      .container { width: 100%; max-width: 800px; padding: 20px; animation: fadeIn 0.8s ease-out; }
+      .container { 
+        width: 100%; 
+        max-width: 650px; 
+        padding: 15px; 
+      }
       .frame {
         position: relative;
-        padding: 50px 40px;
-        border-radius: 20px;
-        backdrop-filter: blur(15px);
+        padding: 40px 30px; 
+        border-radius: 12px;
+        backdrop-filter: blur(18px);
         background: var(--panel-bg);
         border: 2px solid var(--border-color);
-        box-shadow: 0 0 50px rgba(0,0,0,0.5), 0 0 25px var(--shadow-color);
-        min-height: 550px;
+        box-shadow: 0 0 30px rgba(0,0,0,0.7), 0 0 15px var(--shadow-glow);
+        min-height: 480px; 
       }
       .main-title {
         font-family: var(--font-title);
         text-align: center;
-        margin-bottom: 40px;
-        font-size: 36px;
-        color: var(--accent-color);
-        text-shadow: 0 0 10px var(--accent-glow);
+        margin-bottom: 30px; 
+        font-size: 32px;
+        color: var(--accent-pink); 
+        text-shadow: 0 0 10px rgba(255, 0, 127, 0.8);
         animation: neonPulse 2s linear infinite alternate;
         text-transform: uppercase;
         letter-spacing: 4px;
       }
       .info-panel {
         text-align: center;
-        margin-bottom: 35px;
-        padding: 30px;
-        background: rgba(18, 22, 28, 0.4);
-        border-radius: 12px;
+        margin-bottom: 25px; 
+        padding: 20px; 
+        background: rgba(0, 191, 255, 0.1);
+        border-radius: 10px;
         border: 1px solid var(--border-color);
       }
       .info-line {
-        font-size: 18px;
-        margin-bottom: 20px;
+        font-size: 16px; 
+        margin-bottom: 12px; 
         display: flex;
         align-items: center;
-        justify-content: center;
-        gap: 15px;
+        justify-content: space-between; 
+        gap: 10px;
       }
       .info-line:last-child { margin-bottom: 0; }
-      .info-line .label { color: var(--text-color-secondary); }
+      .info-line .label { color: var(--text-secondary); }
       .info-line .value { font-weight: 600; color: var(--text-color); }
-      .info-line .active { color: var(--success-color); text-shadow: 0 0 8px var(--success-glow); }
-      .info-line .inactive { color: var(--danger-color); text-shadow: 0 0 8px var(--danger-glow); }
-      .info-line .balance { color: var(--accent-color); text-shadow: 0 0 8px var(--shadow-color); }
-      #refresh-balance-btn { cursor: pointer; color: var(--accent-color); transition: transform 0.5s ease-in-out; }
-      #refresh-balance-btn:hover { transform: rotate(180deg); }
-      .input-group { position: relative; margin-bottom: 30px; }
-      .input-group .input-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--text-color-secondary); }
+      .info-line .active { color: var(--success-color); text-shadow: 0 0 8px rgba(57, 255, 20, 0.7); }
+      .info-line .inactive { color: var(--danger-color); text-shadow: 0 0 8px rgba(255, 51, 51, 0.7); }
+      #balance-status {
+          border-top: 1px dashed var(--border-color);
+          padding-top: 12px;
+          margin-top: 12px;
+          font-size: 18px;
+      }
+      .info-line .balance { 
+        color: var(--accent-blue); 
+        text-shadow: 0 0 8px var(--shadow-glow); 
+        font-size: 20px;
+      }
+      #refresh-balance-btn { display: none !important; } 
+
+      .input-group { position: relative; margin-bottom: 20px; }
+      .input-group .input-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-size: 16px; }
       #key-input {
         width: 100%;
-        padding: 18px 20px 18px 60px;
-        border-radius: 12px;
+        padding: 15px 15px 15px 50px; 
+        border-radius: 10px;
         border: 2px solid var(--border-color);
-        font-size: 18px;
-        background: rgba(18, 22, 28, 0.6);
-        color: var(--text-color);
-        font-family: var(--font-mono);
-        transition: all 0.3s ease;
+        font-size: 16px;
+        background: rgba(0, 0, 0, 0.4);
+        color: var(--accent-blue);
+        font-family: var(--font-body);
+        transition: all var(--transition-speed) ease;
         text-transform: uppercase;
       }
-      #key-input:focus { border-color: var(--border-hover); box-shadow: 0 0 15px var(--shadow-color); outline: none; }
+      #key-input:focus { border-color: var(--accent-pink); box-shadow: 0 0 15px rgba(255, 0, 127, 0.5); outline: none; }
       .submit-btn {
         width: 100%;
-        padding: 18px;
-        margin-top: 15px;
-        border-radius: 12px;
+        padding: 15px;
+        margin-top: 10px; 
+        border-radius: 10px;
         border: none;
         font-weight: 700;
         font-family: var(--font-title);
-        font-size: 18px;
+        font-size: 17px;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: all var(--transition-speed) ease;
         text-transform: uppercase;
         letter-spacing: 1px;
       }
-      .submit-btn:hover { transform: translateY(-3px); }
-      #activate-btn { background-color: var(--accent-color); color: var(--bg-color); box-shadow: 0 5px 20px -5px var(--shadow-color); }
-      #activate-btn:hover { box-shadow: 0 8px 30px -5px var(--shadow-color); }
-      #goto-menu-btn { background-color: var(--success-color); color: var(--bg-color); display: none; box-shadow: 0 5px 20px -5px var(--success-glow); }
-      #goto-menu-btn:hover { box-shadow: 0 8px 30px -5px var(--success-glow); }
-      #logout-btn { background-color: var(--danger-color); color: var(--bg-color); box-shadow: 0 5px 20px -5px var(--danger-glow); }
-      #logout-btn:hover { box-shadow: 0 8px 30px -5px var(--danger-glow); }
+      .submit-btn:hover { transform: translateY(-2px); opacity: 0.9; }
+      #activate-btn { 
+        background: linear-gradient(90deg, var(--accent-pink), var(--accent-blue)); 
+        color: var(--bg-color); 
+        box-shadow: 0 5px 20px -5px rgba(255, 0, 127, 0.7); 
+      }
+      #activate-btn:hover { box-shadow: 0 8px 30px -5px rgba(255, 0, 127, 1); }
+      #goto-menu-btn { 
+        background-color: var(--success-color); 
+        color: var(--bg-color); 
+        display: none; 
+        box-shadow: 0 5px 20px -5px rgba(57, 255, 20, 0.6); 
+      }
+      #goto-menu-btn:hover { box-shadow: 0 8px 30px -5px rgba(57, 255, 20, 1); }
+      #logout-btn { 
+        background-color: var(--danger-color); 
+        color: var(--bg-color); 
+        box-shadow: 0 5px 20px -5px rgba(255, 51, 51, 0.6); 
+      }
+      #logout-btn:hover { box-shadow: 0 8px 30px -5px rgba(255, 51, 51, 1); }
       
       /* --- Sidebar & Menu --- */
       #menu-toggle-btn {
-        position: absolute; top: 25px; left: 25px;
-        width: 55px; height: 55px;
+        position: absolute; top: 15px; left: 15px; 
+        width: 45px; height: 45px; 
         border-radius: 50%;
         display: flex; align-items: center; justify-content: center;
-        background: rgba(18, 22, 28, 0.7);
-        color: white; border: 2px solid var(--border-color);
-        cursor: pointer; transition: all 0.3s ease; z-index: 1001;
+        background: rgba(0, 191, 255, 0.2);
+        color: var(--accent-blue); 
+        border: 2px solid var(--accent-blue);
+        cursor: pointer; 
+        transition: all var(--transition-speed) ease; 
+        z-index: 1003;
+        box-shadow: 0 0 10px var(--shadow-glow);
       }
-      #menu-toggle-btn:hover { transform: scale(1.1); box-shadow: 0 0 20px var(--shadow-color); }
+      #menu-toggle-btn:hover { transform: scale(1.1) rotate(90deg); box-shadow: 0 0 20px var(--shadow-glow), 0 0 10px var(--accent-pink); }
       #sidebar {
         height: 100%; width: var(--sidebar-width);
         position: fixed; top: 0; left: calc(-1 * var(--sidebar-width));
-        z-index: 1002; display: flex; flex-direction: column;
+        z-index: 1004; /* Tăng z-index để chắc chắn nằm trên overlay */
+        display: flex; flex-direction: column;
         backdrop-filter: blur(25px);
-        background: rgba(18, 22, 28, 0.95);
-        border-right: 2px solid var(--border-color);
-        padding: 40px 30px; transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        background: rgba(10, 15, 25, 0.98);
+        border-right: 2px solid var(--accent-pink);
+        padding: 30px 20px; 
+        transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
       }
       #sidebar.open { left: 0; }
       .sidebar-header {
@@ -209,45 +234,34 @@
         padding-bottom: 25px; margin-bottom: 25px;
         border-bottom: 2px solid var(--border-color);
       }
-      .sidebar-title { font-size: 30px; color: var(--accent-color); font-family: var(--font-title); letter-spacing: 2px; }
+      .sidebar-title { font-size: 28px; color: var(--accent-pink); font-family: var(--font-title); letter-spacing: 2px; }
       #close-sidebar-btn { background:none; border:none; font-size: 28px; color:white; cursor:pointer; transition: all 0.3s ease; }
-      #close-sidebar-btn:hover { transform: rotate(90deg); color: var(--accent-color); }
+      #close-sidebar-btn:hover { transform: rotate(90deg); color: var(--accent-blue); }
       .nav-links a {
-        color: var(--text-color-secondary); text-decoration: none;
-        display: flex; align-items: center; gap: 20px; padding: 20px;
-        border-radius: 12px; font-size: 18px; margin-bottom: 12px;
+        color: var(--text-secondary); text-decoration: none;
+        display: flex; align-items: center; gap: 20px; padding: 15px;
+        border-radius: 8px; font-size: 16px; margin-bottom: 8px;
         transition: all 0.2s ease-in-out;
       }
       .nav-links a:hover, .nav-links a.active {
-        background-color: rgba(0, 255, 194, 0.1);
-        color: white;
-        transform: translateX(8px);
-        text-shadow: 0 0 5px var(--accent-glow);
+        background-color: rgba(255, 0, 127, 0.1);
+        color: var(--accent-blue);
+        transform: translateX(5px);
+        text-shadow: 0 0 5px var(--shadow-glow);
       }
-      .nav-links a i { width: 24px; text-align: center; font-size: 20px; }
+      .nav-links a i { width: 24px; text-align: center; font-size: 18px; }
       #overlay {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
         background: rgba(0, 0, 0, 0.6); z-index: 1001;
         opacity: 0; visibility: hidden; transition: all 0.4s ease;
       }
       #overlay.visible { opacity: 1; visibility: visible; }
-      @media (max-width: 768px) {
-        .container { padding: 15px; }
-        .frame { padding: 40px 20px; min-height: 480px; }
-        .main-title { font-size: 28px; letter-spacing: 1px; }
-        .info-line { font-size: 16px; flex-direction: column; gap: 5px; }
-        .input-group { margin-bottom: 25px; }
-        #key-input { padding: 16px 15px 16px 50px; font-size: 16px; }
-        .submit-btn { padding: 16px; font-size: 17px; }
-        --sidebar-width: 260px;
-        #menu-toggle-btn { width: 50px; height: 50px; font-size: 20px; }
-      }
     </style>
 </head>
 <body>
 <nav id="sidebar">
     <div class="sidebar-header">
-        <span class="sidebar-title">MENU</span>
+        <span class="sidebar-title">COSMIC MENU</span>
         <button id="close-sidebar-btn"><i class="fas fa-times"></i></button>
     </div>
     <div class="nav-links">
@@ -265,18 +279,21 @@
 <div class="container">
     <div class="frame">
         <button id="menu-toggle-btn"><i class="fas fa-bars"></i></button>
-        <h2 class="main-title">BẢNG ĐIỀU KHIỂN</h2>
+        <h2 class="main-title">BẢNG ĐIỀU KHIỂN COSMIC</h2>
         <div class="info-panel">
             <div id="welcome-message" class="info-line"></div>
             <div id="key-status" class="info-line"></div>
-            <div id="balance-status" class="info-line"></div>
+            <div id="balance-status" class="info-line">
+                <span class="label">Số dư:</span>
+                <span class="value balance" id="current-balance-value">0 VNĐ</span>
+            </div>
         </div>
         <div id="activation-view">
             <div class="input-group">
                 <input type="text" id="key-input" placeholder="Nhập key bạn đã mua...">
                 <i class="fas fa-key input-icon"></i>
             </div>
-            <button id="activate-btn" class="submit-btn">KÍCH HOẠT</button>
+            <button id="activate-btn" class="submit-btn">KÍCH HOẠT KEY</button>
         </div>
         <button id="goto-menu-btn" class="submit-btn">VÀO TOOL</button>
         <button id="logout-btn" class="submit-btn">ĐĂNG XUẤT</button>
@@ -299,13 +316,40 @@
     const db = firebase.firestore();
 
     const swalConfig = {
-        background: 'rgba(22, 27, 34, 0.95)',
-        color: '#E6EDF3',
-        confirmButtonColor: '#3081F7',
+        background: 'var(--panel-bg)',
+        color: 'var(--text-color)',
+        confirmButtonColor: 'var(--accent-pink)',
         confirmButtonText: 'Đồng Ý',
     };
 
     let countdownInterval;
+    let balanceUpdateInterval; 
+
+    async function autoUpdateBalance(username) {
+        if (!username) return;
+        try {
+            const userDocRef = db.collection('users').doc(username);
+            const doc = await userDocRef.get();
+
+            if (doc.exists) {
+                const newBalance = doc.data().balance || 0;
+                const currentBalanceEl = document.getElementById('current-balance-value');
+                
+                if (currentBalanceEl) {
+                    currentBalanceEl.textContent = `${newBalance.toLocaleString('vi-VN')} VNĐ`;
+                }
+
+                let userInfo = JSON.parse(localStorage.getItem('tool_user_info'));
+                if (userInfo.balance !== newBalance) {
+                    userInfo.balance = newBalance;
+                    localStorage.setItem('tool_user_info', JSON.stringify(userInfo));
+                }
+            }
+        } catch (error) {
+            console.error("Lỗi khi tự động làm mới số dư:", error);
+        }
+    }
+
 
     document.addEventListener('DOMContentLoaded', function() {
         let userInfo = JSON.parse(localStorage.getItem('tool_user_info'));
@@ -313,12 +357,37 @@
             window.location.href = 'index.html';
             return;
         }
+        const username = userInfo.username;
+
+        balanceUpdateInterval = setInterval(() => autoUpdateBalance(username), 1000);
+        
+        const welcomeEl = document.getElementById('welcome-message');
+        const keyStatusEl = document.getElementById('key-status');
+        const currentBalanceValueEl = document.getElementById('current-balance-value'); 
+        const activationView = document.getElementById('activation-view');
+        const gotoMenuBtn = document.getElementById('goto-menu-btn');
+        const activateBtn = document.getElementById('activate-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        
+        // --- LOGIC SIDEBAR MỚI (Đã Sửa Lỗi) ---
+        const sidebar = document.getElementById('sidebar'), overlay = document.getElementById('overlay');
+        const menuToggleBtn = document.getElementById('menu-toggle-btn'), closeSidebarBtn = document.getElementById('close-sidebar-btn');
+        
+        const openSidebar = () => { sidebar.classList.add('open'); overlay.classList.add('visible'); };
+        const closeSidebar = () => { sidebar.classList.remove('open'); overlay.classList.remove('visible'); };
+        
+        // **Đây là phần đã được sửa lỗi/thêm lại**
+        menuToggleBtn.addEventListener('click', openSidebar);
+        closeSidebarBtn.addEventListener('click', closeSidebar);
+        overlay.addEventListener('click', closeSidebar);
+        document.addEventListener('keydown', (e) => e.key === 'Escape' && sidebar.classList.contains('open') && closeSidebar());
+        // ------------------------------------
 
         if (!sessionStorage.getItem('hasSeenAnnouncement')) {
             Swal.fire({
                 ...swalConfig,
                 icon: 'warning',
-                title: '<span style="color: #f7a200;">Thông Báo Quan Trọng</span>',
+                title: '<span style="color: var(--accent-pink);">THÔNG BÁO QUAN TRỌNG</span>',
                 html: `<b>NGƯỜI DÙNG CHỈ NÊN MUA KEY TRỰC TIẾP TẠI WEB.</b><br>
                         CÁC GAME CÓ THỂ SỬ DỤNG GỒM :mua r bt<br><br>
                         <i>CẢM ƠN VÌ ĐÃ CHÚ Ý.</i>`,
@@ -327,21 +396,15 @@
             sessionStorage.setItem('hasSeenAnnouncement', 'true');
         }
 
-        const welcomeEl = document.getElementById('welcome-message');
-        const keyStatusEl = document.getElementById('key-status');
-        const balanceEl = document.getElementById('balance-status');
-        const activationView = document.getElementById('activation-view');
-        const gotoMenuBtn = document.getElementById('goto-menu-btn');
-        const activateBtn = document.getElementById('activate-btn');
-        const logoutBtn = document.getElementById('logout-btn');
-
         function updateUI(user) {
             userInfo = user;
             localStorage.setItem('tool_user_info', JSON.stringify(userInfo));
 
             welcomeEl.innerHTML = `<span class="label">Xin chào,</span><span class="value active">${user.username}</span>`;
-            balanceEl.innerHTML = `<span class="label">Số dư:</span><span class="value balance">${(user.balance || 0).toLocaleString('vi-VN')} VNĐ</span><i class="fas fa-sync-alt" id="refresh-balance-btn" title="Làm mới số dư"></i>`;
-            document.getElementById('refresh-balance-btn').addEventListener('click', refreshBalance);
+            if (currentBalanceValueEl) {
+                currentBalanceValueEl.textContent = `${(user.balance || 0).toLocaleString('vi-VN')} VNĐ`;
+            }
+            
 
             if (user.isActive && user.expiryDate) {
                 const expiryTime = new Date(user.expiryDate).getTime();
@@ -382,7 +445,7 @@
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                keyStatusEl.innerHTML = `<span class="label">Trạng thái:</span><span class="value active">ĐÃ KÍCH HOẠT</span><span class="label" style="font-size:14px;">(Hết hạn: ${days}d ${hours}h ${minutes}m ${seconds}s)</span>`;
+                keyStatusEl.innerHTML = `<span class="label">Trạng thái:</span><span class="value active">ĐÃ KÍCH HOẠT</span><span class="label" style="font-size:14px; margin-left: 8px;">(Hết hạn: ${days}d ${hours}h ${minutes}m ${seconds}s)</span>`;
             }
 
             updateCountdown();
@@ -395,7 +458,8 @@
                     isActive: false,
                     expiryDate: null,
                 });
-                updateUI({ ...user, isActive: false, expiryDate: null });
+                let updatedUser = { ...user, isActive: false, expiryDate: null };
+                updateUI(updatedUser);
                 Swal.fire({
                     ...swalConfig,
                     title: 'Thông báo',
@@ -404,28 +468,6 @@
                 });
             } catch (error) {
                 console.error("Lỗi khi cập nhật trạng thái key:", error);
-            }
-        }
-
-        async function refreshBalance() {
-            const refreshBtn = document.getElementById('refresh-balance-btn');
-            if (refreshBtn.classList.contains('fa-spin')) return;
-            refreshBtn.classList.add('fa-spin');
-            
-            try {
-                const userDocRef = db.collection('users').doc(userInfo.username);
-                const doc = await userDocRef.get();
-
-                if (doc.exists) {
-                    updateUI(doc.data());
-                    Swal.fire({ ...swalConfig, toast: true, position: 'top-end', icon: 'success', title: 'Đã cập nhật số dư!', showConfirmButton: false, timer: 1500 });
-                } else {
-                    throw new Error('Không tìm thấy thông tin người dùng.');
-                }
-            } catch (error) {
-                Swal.fire({...swalConfig, title: 'Lỗi', text:`Không thể làm mới số dư: ${error.message}`, icon: 'error'});
-            } finally {
-                refreshBtn.classList.remove('fa-spin');
             }
         }
 
@@ -453,8 +495,18 @@
                     if (!userDoc.exists) {
                         throw new Error('Không tìm thấy người dùng.');
                     }
-                    const newExpiry = new Date();
-                    newExpiry.setDate(newExpiry.getDate() + keyDoc.data().durationDays);
+                    
+                    const durationDays = keyDoc.data().durationDays || 30; // Mặc định 30 ngày nếu không có
+                    
+                    let newExpiry = new Date();
+                    const currentExpiryTime = userDoc.data().expiryDate ? new Date(userDoc.data().expiryDate).getTime() : 0;
+                    
+                    // Nếu đã có key đang hoạt động và chưa hết hạn, thêm thời gian vào key cũ
+                    if (userDoc.data().isActive && currentExpiryTime > Date.now()) {
+                         newExpiry = new Date(currentExpiryTime);
+                    } 
+                    
+                    newExpiry.setDate(newExpiry.getDate() + durationDays);
 
                     transaction.update(keyDocRef, { isUsed: true, owner: userInfo.username });
                     transaction.update(userDocRef, { 
@@ -480,19 +532,10 @@
         logoutBtn.addEventListener('click', () => { 
             localStorage.clear(); 
             sessionStorage.clear();
+            if (balanceUpdateInterval) clearInterval(balanceUpdateInterval);
+            if (countdownInterval) clearInterval(countdownInterval);
             window.location.href = 'index.html'; 
         });
-                
-        const sidebar = document.getElementById('sidebar'), overlay = document.getElementById('overlay');
-        const menuToggleBtn = document.getElementById('menu-toggle-btn'), closeSidebarBtn = document.getElementById('close-sidebar-btn');
-        
-        const openSidebar = () => { sidebar.classList.add('open'); overlay.classList.add('visible'); };
-        const closeSidebar = () => { sidebar.classList.remove('open'); overlay.classList.remove('visible'); };
-        
-        menuToggleBtn.addEventListener('click', openSidebar);
-        closeSidebarBtn.addEventListener('click', closeSidebar);
-        overlay.addEventListener('click', closeSidebar);
-        document.addEventListener('keydown', (e) => e.key === 'Escape' && sidebar.classList.contains('open') && closeSidebar());
         
         updateUI(userInfo);
     });
