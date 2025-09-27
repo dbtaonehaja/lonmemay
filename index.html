@@ -2,339 +2,562 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Đăng Nhập Tool ⚡</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&family=Fira+Code:wght@500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>ĐĂNG NHẬP HỆ THỐNG - CYBERNETIC AUTH</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
     
     <style>
-      :root {
-        --bg-color: #0D1117;
-        --panel-bg: rgba(22, 27, 34, 0.8);
-        --accent-color: #3081F7;
-        --text-color: #E6EDF3;
-        --text-color-secondary: #7d8590;
-        --border-color: rgba(56, 139, 253, 0.3);
-        --border-hover: rgba(56, 139, 253, 0.7);
-        --shadow-color: rgba(56, 139, 253, 0.5);
-        --success-color: #238636;
-        --danger-color: #DA3633;
-        --font-body: 'Poppins', sans-serif;
-        --font-title: 'Orbitron', sans-serif;
-        --font-mono: 'Fira Code', monospace;
-      }
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-      @keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-15px); } }
-      @keyframes pulseGlow {
-        0%, 100% { text-shadow: 0 0 4px var(--accent-color); color: var(--accent-color); }
-        50% { text-shadow: 0 0 10px var(--accent-color); color: white; }
-      }
-      body {
-        font-family: var(--font-body);
-        background-color: var(--bg-color);
-        background-image: url('https://i.postimg.cc/yYmj6vYd/1758217953804.png');
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        color: var(--text-color);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        overflow-x: hidden;
-      }
-      .container {
-        width: 100%;
-        max-width: 400px;
-        padding: 20px;
-        animation: fadeIn 0.8s ease-out forwards;
-      }
-      .login-frame {
-        background: var(--panel-bg);
-        border: 1px solid var(--border-color);
-        border-radius: 16px;
-        padding: 35px;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 0 50px rgba(0,0,0,0.5), 0 0 25px var(--shadow-color);
-      }
-      .main-title {
-        font-family: var(--font-title);
-        text-align: center;
-        margin-bottom: 30px;
-        font-size: 24px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        animation: pulseGlow 4s ease-in-out infinite;
-      }
-      .input-group {
-        position: relative;
-        margin-bottom: 25px;
-      }
-      .input-group .input-icon {
-        position: absolute;
-        left: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--text-color-secondary);
-        transition: color 0.3s ease;
-      }
-      .input-field {
-        width: 100%;
-        padding: 12px 15px 12px 45px;
-        border-radius: 8px;
-        border: 1px solid var(--border-color);
-        font-family: var(--font-body);
-        font-size: 15px;
-        background: rgba(13, 17, 23, 0.5);
-        color: var(--text-color);
-        transition: all 0.3s ease;
-      }
-      .input-field:focus {
-        border-color: var(--border-hover);
-        box-shadow: 0 0 10px var(--shadow-color);
-        outline: none;
-      }
-      .input-field:focus + .input-icon {
-        color: var(--accent-color);
-      }
-      .toggle-password {
-        position: absolute;
-        right: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-        cursor: pointer;
-        color: var(--text-color-secondary);
-        transition: color 0.3s ease;
-      }
-      .toggle-password:hover { color: var(--accent-color); }
-      .submit-btn {
-        width: 100%;
-        padding: 12px;
-        margin-top: 10px;
-        border-radius: 8px;
-        border: none;
-        font-weight: 600;
-        font-family: var(--font-title);
-        font-size: 16px;
-        cursor: pointer;
-        color: #fff;
-        text-transform: uppercase;
-        background-color: var(--accent-color);
-        box-shadow: 0 4px 15px -5px var(--shadow-color);
-        transition: all 0.3s ease;
-      }
-      .submit-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 20px -5px var(--shadow-color);
-      }
-      .form-links {
-        text-align: center;
-        margin-top: 25px;
-        font-size: 14px;
-      }
-      .form-links a {
-        color: var(--accent-color);
-        text-decoration: none;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-      .form-links a:hover {
-        text-decoration: underline;
-        color: #fff;
-      }
-      @media (max-width: 768px) {
-        .login-frame { padding: 25px; }
-        .main-title { font-size: 20px; }
-      }
+        /* ===================================================================
+        CÁC QUY TẮC CSS GỐC VẪN ĐƯỢC GIỮ NGUYÊN (VIP PRO CYBER-AI THEME)
+        ===================================================================
+        */
+        :root {
+            --bg-color: #01010A; 
+            --card-bg: rgba(5, 5, 25, 0.95); 
+            --text-color: #E6FBFF; 
+            --primary-neon: #00FFFF; /* Xanh Cyan Neon */
+            --secondary-neon: #FF00FF; /* Hồng Magenta Neon */
+            --primary-glow: rgba(0, 255, 255, 0.6);
+            --secondary-glow: rgba(255, 0, 255, 0.6);
+            --input-bg: #1A1A30;
+            --input-border: #3A3A60;
+            --transition: all 0.3s ease-in-out;
+            --font-main: 'Rajdhani', sans-serif;
+            --font-title: 'Audiowide', cursive;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: var(--text-color);
+            overflow: hidden;
+            position: relative;
+            background-image: radial-gradient(circle at center, rgba(0, 255, 255, 0.05) 0%, rgba(1, 1, 10, 1) 70%), 
+                              repeating-linear-gradient(0deg, var(--bg-color), rgba(0, 255, 255, 0.05) 1px, transparent 1px, transparent 20px);
+            background-size: 100% 100%, 100% 100%;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 50px;
+            box-shadow: 0 0 50px var(--primary-glow);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            transition: var(--transition);
+            border: 2px solid var(--primary-neon);
+            position: relative;
+            animation: pulse-border 4s infinite alternate;
+        }
+
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 10px var(--primary-glow); }
+            100% { box-shadow: 0 0 30px var(--secondary-glow); }
+        }
+
+        .form-container {
+            animation: glitch-in 1.5s forwards;
+        }
+
+        @keyframes glitch-in {
+            0% { opacity: 0; transform: translateY(-50px) scale(0.8); filter: hue-rotate(90deg); }
+            100% { opacity: 1; transform: translateY(0) scale(1); filter: hue-rotate(0deg); }
+        }
+        
+        /* DYNAMIC LOGO STYLES */
+        .logo-wrapper {
+            margin-bottom: 20px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px; 
+        }
+        
+        .dynamic-logo {
+            max-width: 100%;
+            max-height: 60px;
+            height: auto;
+            object-fit: contain;
+            box-shadow: 0 0 15px var(--secondary-glow);
+            border: 1px solid var(--secondary-neon);
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        /* LANGUAGE SWITCHER STYLES */
+        #language-switcher {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 10;
+        }
+
+        .lang-button {
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 700;
+            transition: var(--transition);
+            margin-left: 5px;
+        }
+
+        .lang-button:hover {
+            background: var(--input-border);
+            color: var(--primary-neon);
+            box-shadow: 0 0 5px var(--primary-glow);
+        }
+
+        .lang-button.active {
+            background: linear-gradient(45deg, var(--primary-neon), var(--secondary-neon));
+            color: var(--bg-color);
+            border-color: var(--primary-neon);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+        
+        h2 {
+            font-family: var(--font-title);
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--secondary-neon);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px var(--secondary-glow);
+        }
+
+        p {
+            color: #A0A0FF;
+            margin-bottom: 35px;
+            font-size: 16px;
+            font-weight: 400;
+            text-transform: uppercase;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px 15px 15px 50px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            font-size: 18px;
+            color: var(--primary-neon);
+            box-sizing: border-box;
+            transition: var(--transition);
+            font-family: var(--font-main);
+            font-weight: 600;
+        }
+        
+        .input-group input::placeholder {
+            color: #505080;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary-neon);
+            box-shadow: 0 0 15px var(--primary-glow), inset 0 0 5px var(--primary-glow);
+            background-color: #252540;
+        }
+
+        .input-group .icon-left {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary-neon);
+            font-size: 18px;
+            text-shadow: 0 0 5px var(--secondary-glow);
+        }
+
+        .input-group .icon-right {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .input-group .icon-right:hover {
+            color: var(--primary-neon);
+            text-shadow: 0 0 8px var(--primary-glow);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(90deg, var(--primary-neon), var(--secondary-neon));
+            color: var(--bg-color);
+            font-family: var(--font-title);
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 20px var(--secondary-glow);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .btn-submit:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 30px var(--primary-glow);
+            background: linear-gradient(90deg, var(--secondary-neon), var(--primary-neon));
+            color: var(--text-color);
+            text-shadow: 0 0 5px var(--bg-color);
+        }
+
+        .btn-submit .fas {
+            margin-right: 10px;
+        }
+
+        .switch-form {
+            margin-top: 30px;
+            font-size: 15px;
+            color: var(--text-color);
+        }
+
+        .switch-form a {
+            color: var(--primary-neon);
+            text-decoration: none;
+            font-weight: 700;
+            transition: var(--transition);
+            border-bottom: 1px solid transparent;
+            text-shadow: 0 0 5px var(--primary-glow);
+        }
+
+        .switch-form a:hover {
+            border-bottom: 1px solid var(--secondary-neon);
+            color: var(--secondary-neon);
+            text-shadow: 0 0 8px var(--secondary-glow);
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-  <div class="login-frame">
-    <div id="login-view">
-      <h2 class="main-title"><i class="fas fa-shield-alt"></i> Secure Login <i class="fas fa-shield-alt"></i></h2>
-      <div class="input-group">
-        <input type="text" id="loginUser" class="input-field" placeholder="Tên đăng nhập" onkeyup="if(event.key === 'Enter') loginUser()">
-        <i class="fas fa-user-astronaut input-icon"></i>
-      </div>
-      <div class="input-group">
-        <input type="password" id="loginPass" class="input-field" placeholder="Mật khẩu" onkeyup="if(event.key === 'Enter') loginUser()">
-        <i class="fas fa-key input-icon"></i>
-        <i class="fas fa-eye toggle-password" onclick="togglePassword('loginPass', this)"></i>
-      </div>
-      <button class="submit-btn" onclick="loginUser()"><i class="fas fa-rocket"></i> Đăng Nhập</button>
-      <div class="form-links">
-        <a onclick="toggleView()">Chưa có tài khoản? Đăng ký</a>
-      </div>
+    <div class="container">
+        <div id="language-switcher">
+            <span class="lang-button active" data-lang="vi">VI</span>
+            <span class="lang-button" data-lang="en">EN</span>
+        </div>
+        
+        <div class="logo-wrapper">
+            <img id="app-logo" src="https://i.imgur.com/gK9JgS0.png" alt="App Logo" class="dynamic-logo">
+        </div>
+
+        <div class="form-container" id="signup-form">
+            <h2 data-vi="ĐĂNG KÝ HỒ SƠ" data-en="INITIATE PROFILE">ĐĂNG KÝ HỒ SƠ</h2>
+            <p data-vi="Khởi tạo tài khoản hệ thống." data-en="Authenticate identity. Start session access.">Khởi tạo tài khoản hệ thống.</p>
+            <form id="form-dangky">
+                <div class="input-group">
+                    <i class="icon-left fas fa-user-circle"></i>
+                    <input type="text" id="signup-username" data-vi="TÀI KHOẢN" data-en="USERNAME" placeholder="TÀI KHOẢN" required>
+                </div>
+                <div class="input-group">
+                    <i class="icon-left fas fa-fingerprint"></i>
+                    <input type="password" id="signup-password" data-vi="MẬT KHẨU (TỐI THIỂU 6 KÝ TỰ)" data-en="PASSWORD (MIN 6 CHARS)" placeholder="MẬT KHẨU (TỐI THIỂU 6 KÝ TỰ)" required>
+                    <i class="icon-right far fa-eye-slash toggle-password" onclick="togglePassword('signup-password', this)"></i>
+                </div>
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-plus-square"></i> <span data-vi="ĐĂNG KÝ TÀI KHOẢN" data-en="REGISTER ACCOUNT">ĐĂNG KÝ TÀI KHOẢN</span>
+                </button>
+            </form>
+            <p class="switch-form">
+                <span data-vi="Đã có tài khoản?" data-en="Already have an account?">Đã có tài khoản?</span> 
+                <a href="#" id="link-to-signin" data-vi="CHUYỂN SANG ĐĂNG NHẬP" data-en="SWITCH TO LOGIN">CHUYỂN SANG ĐĂNG NHẬP</a>
+            </p>
+        </div>
+
+        <div class="form-container" id="signin-form" style="display:none;">
+            <h2 data-vi="TRUY CẬP HỆ THỐNG" data-en="SYSTEM ACCESS">TRUY CẬP HỆ THỐNG</h2>
+            <p data-vi="Hệ thống chờ nhận diện. Nhập thông số truy cập." data-en="System pending recognition. Enter access parameters.">Hệ thống chờ nhận diện. Nhập thông số truy cập.</p>
+            <form id="form-dangnhap">
+                <div class="input-group">
+                    <i class="icon-left fas fa-user-circle"></i>
+                    <input type="text" id="signin-username" data-vi="TÀI KHOẢN" data-en="USERNAME" placeholder="TÀI KHOẢN" required>
+                </div>
+                <div class="input-group">
+                    <i class="icon-left fas fa-fingerprint"></i>
+                    <input type="password" id="signin-password" data-vi="MẬT KHẨU" data-en="PASSWORD" placeholder="MẬT KHẨU" required>
+                    <i class="icon-right far fa-eye-slash toggle-password" onclick="togglePassword('signin-password', this)"></i>
+                </div>
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-sign-in-alt"></i> <span data-vi="ĐĂNG NHẬP VÀO TOOL" data-en="LOGIN TO TOOL">ĐĂNG NHẬP VÀO TOOL</span>
+                </button>
+            </form>
+            <p class="switch-form">
+                <span data-vi="Chưa có tài khoản?" data-en="Don't have an account yet?">Chưa có tài khoản?</span> 
+                <a href="#" id="link-to-signup" data-vi="ĐĂNG KÝ TÀI KHOẢN MỚI" data-en="REGISTER NEW ACCOUNT">ĐĂNG KÝ TÀI KHOẢN MỚI</a>
+            </p>
+        </div>
     </div>
-    <div id="register-view" style="display:none;">
-      <h2 class="main-title"><i class="fas fa-user-plus"></i> Tạo Tài Khoản <i class="fas fa-atom"></i></h2>
-      <div class="input-group">
-        <input type="text" id="registerUser" class="input-field" placeholder="Tên đăng nhập mong muốn" onkeyup="if(event.key === 'Enter') registerUser()">
-        <i class="fas fa-user-astronaut input-icon"></i>
-      </div>
-      <div class="input-group">
-        <input type="password" id="registerPass" class="input-field" placeholder="Mật khẩu (ít nhất 6 ký tự)" onkeyup="if(event.key === 'Enter') registerUser()">
-        <i class="fas fa-key input-icon"></i>
-        <i class="fas fa-eye toggle-password" onclick="togglePassword('registerPass', this)"></i>
-      </div>
-      <div class="input-group">
-        <input type="password" id="registerConfirmPass" class="input-field" placeholder="Xác nhận lại mật khẩu" onkeyup="if(event.key === 'Enter') registerUser()">
-        <i class="fas fa-check-double input-icon"></i>
-        <i class="fas fa-eye toggle-password" onclick="togglePassword('registerConfirmPass', this)"></i>
-      </div>
-      <button class="submit-btn" onclick="registerUser()"><i class="fas fa-user-check"></i> Đăng Ký</button>
-      <div class="form-links">
-        <a onclick="toggleView()">Đã có tài khoản? Đăng nhập</a>
-      </div>
-    </div>
-  </div>
-</div>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    
+    <script>
+        // =================================================================
+        // Cấu hình Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAXtM_AHMeg76S0VaxQTJ_e68qKg0KxKRk",
+            authDomain: "ma-my-7cb60.firebaseapp.com",
+            projectId: "ma-my-7cb60",
+            storageBucket: "ma-my-7cb60.firebasestorage.app",
+            messagingSenderId: "139387264637",
+            appId: "1:139387264637:web:5c296efe7d3bb97a2a5b14",
+            measurementId: "G-E6RHBS10QV"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        // =================================================================
 
-<script>
-    // =================================================================
-    // Cấu hình Firebase
-    const firebaseConfig = {
-        apiKey: "AIzaSyAXtM_AHMeg76S0VaxQTJ_e68qKg0KxKRk",
-        authDomain: "ma-my-7cb60.firebaseapp.com",
-        projectId: "ma-my-7cb60",
-        storageBucket: "ma-my-7cb60.firebasestorage.app",
-        messagingSenderId: "139387264637",
-        appId: "1:139387264637:web:5c296efe7d3bb97a2a5b14",
-        measurementId: "G-E6RHBS10QV"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-    // =================================================================
+        const signupForm = document.getElementById('form-dangky');
+        const signinForm = document.getElementById('form-dangnhap');
+        const linkToSignin = document.getElementById('link-to-signin');
+        const linkToSignup = document.getElementById('link-to-signup');
+        const signupContainer = document.getElementById('signup-form');
+        const signinContainer = document.getElementById('signin-form');
+        const langButtons = document.querySelectorAll('.lang-button');
+        
+        let currentLang = 'vi';
 
-function getSwalStyle() {
-  return {
-    background: 'rgba(22, 27, 34, 0.95)',
-    color: '#E6EDF3',
-    confirmButtonColor: '#3081F7',
-    confirmButtonText: 'Đồng Ý',
-    cancelButtonText: 'Hủy Bỏ',
-    backdrop: `rgba(0,0,0,0.7) backdrop-filter: blur(5px);`
-  };
-}
+        // Hàm định nghĩa style cho SweetAlert2 (Đảm bảo ngôn ngữ)
+        function getSwalStyle() {
+            return {
+                background: 'rgba(22, 27, 34, 0.95)',
+                color: '#E6EDF3',
+                confirmButtonColor: '#3081F7',
+                confirmButtonText: currentLang === 'vi' ? 'Đồng Ý' : 'Confirm',
+                cancelButtonText: currentLang === 'vi' ? 'Hủy Bỏ' : 'Cancel',
+                backdrop: `rgba(0,0,0,0.7) backdrop-filter: blur(5px);`
+            };
+        }
 
-function togglePassword(inputId, iconElement) {
-  const input = document.getElementById(inputId);
-  input.type = input.type === 'password' ? 'text' : 'password';
-  iconElement.classList.toggle('fa-eye');
-  iconElement.classList.toggle('fa-eye-slash');
-}
+        // Hàm chuyển đổi chế độ xem mật khẩu
+        function togglePassword(inputId, iconElement) {
+            const input = document.getElementById(inputId);
+            input.type = input.type === 'password' ? 'text' : 'password';
+            iconElement.classList.toggle('fa-eye-slash');
+            iconElement.classList.toggle('fa-eye');
+        }
 
-function toggleView() {
-  const loginView = document.getElementById('login-view');
-  const registerView = document.getElementById('register-view');
-  const isLoginVisible = loginView.style.display !== 'none';
+        // Hàm chuyển đổi form với hiệu ứng glitch
+        const switchForm = (show, hide) => {
+            hide.style.display = 'none';
+            show.style.display = 'block';
+            show.style.animation = 'none'; 
+            void show.offsetWidth; 
+            show.style.animation = 'glitch-in 1.5s forwards';
+        };
 
-  if (isLoginVisible) {
-    loginView.style.animation = 'fadeOut 0.3s forwards';
-    setTimeout(() => {
-      loginView.style.display = 'none';
-      registerView.style.display = 'block';
-      registerView.style.animation = 'fadeIn 0.3s forwards';
-    }, 300);
-  } else {
-    registerView.style.animation = 'fadeOut 0.3s forwards';
-    setTimeout(() => {
-      registerView.style.display = 'none';
-      loginView.style.display = 'block';
-      loginView.style.animation = 'fadeIn 0.3s forwards';
-    }, 300);
-  }
-}
+        // Chuyển đổi giữa form đăng ký và đăng nhập
+        linkToSignin.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchForm(signinContainer, signupContainer);
+        });
 
-async function registerUser() {
-  const username = document.getElementById('registerUser').value.trim();
-  const password = document.getElementById('registerPass').value.trim();
-  const confirmPassword = document.getElementById('registerConfirmPass').value.trim();
-  
-  if (!username || !password || !confirmPassword) {
-    Swal.fire({ ...getSwalStyle(), icon: 'warning', title: 'Lỗi', text: 'Vui lòng điền đầy đủ thông tin!' });
-    return;
-  }
-  if (password.length < 6) {
-    Swal.fire({ ...getSwalStyle(), icon: 'warning', title: 'Lỗi', text: 'Mật khẩu phải có ít nhất 6 ký tự!' });
-    return;
-  }
-  if (password !== confirmPassword) {
-    Swal.fire({ ...getSwalStyle(), icon: 'error', title: 'Lỗi', text: 'Mật khẩu xác nhận không khớp!' });
-    return;
-  }
+        linkToSignup.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchForm(signupContainer, signinContainer);
+        });
+        
+        // --- CHỨC NĂNG CHUYỂN ĐỔI NGÔN NGỮ ---
+        const updateContent = (lang) => {
+            currentLang = lang;
+            document.querySelectorAll('[data-vi], [data-en]').forEach(element => {
+                const viText = element.getAttribute('data-vi');
+                const enText = element.getAttribute('data-en');
+                
+                // Cập nhật nội dung thẻ
+                if (element.tagName === 'INPUT') {
+                    element.setAttribute('placeholder', lang === 'vi' ? viText : enText);
+                } else {
+                    element.textContent = lang === 'vi' ? viText : enText;
+                }
+            });
+            
+            langButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                }
+            });
+        };
 
-  try {
-    const userRef = db.collection('users').doc(username);
-    const userDoc = await userRef.get();
+        langButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const lang = button.getAttribute('data-lang');
+                updateContent(lang);
+            });
+        });
+        
+        // Khởi tạo ngôn ngữ mặc định
+        updateContent('vi'); 
 
-    if (userDoc.exists) {
-      Swal.fire({ ...getSwalStyle(), icon: 'error', title: 'Thất bại', text: 'Tên đăng nhập đã tồn tại!' });
-      return;
-    }
 
-    await userRef.set({
-      username: username,
-      password: password, // Lưu mật khẩu dưới dạng văn bản thuần túy, cần mã hóa trong thực tế
-      balance: 0,
-      isActive: false,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
+        // Xử lý Đăng Ký (Sử dụng Firestore và tăng tính ổn định)
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = signupForm['signup-username'].value.trim();
+            const password = signupForm['signup-password'].value.trim();
+            
+            if (!username || !password) {
+                Swal.fire({ 
+                    ...getSwalStyle(), 
+                    icon: 'warning', 
+                    title: currentLang === 'vi' ? 'LỖI' : 'ERROR', 
+                    text: currentLang === 'vi' ? 'Vui lòng điền đầy đủ Tài khoản và Mật khẩu!' : 'Please fill in both Username and Password!' 
+                });
+                return;
+            }
+            
+            // KIỂM TRA ỔN ĐỊNH: Đảm bảo Tên đăng nhập chỉ chứa chữ cái và số
+            const usernameRegex = /^[a-zA-Z0-9]+$/;
+            if (!usernameRegex.test(username)) {
+                Swal.fire({ 
+                    ...getSwalStyle(), 
+                    icon: 'warning', 
+                    title: currentLang === 'vi' ? 'ID KHÔNG HỢP LỆ' : 'INVALID USERNAME', 
+                    text: currentLang === 'vi' ? 'Tài khoản chỉ được chứa chữ cái và số (không dấu, không ký tự đặc biệt, không khoảng trắng).' : 'Username can only contain letters and numbers (no special characters or spaces).' 
+                });
+                return;
+            }
 
-    Swal.fire({ ...getSwalStyle(), icon: 'success', title: 'Thành công!', text: 'Đăng ký tài khoản thành công.' }).then(() => {
-      toggleView();
-      document.getElementById('loginUser').value = username;
-      document.getElementById('loginPass').value = '';
-      document.getElementById('loginPass').focus();
-    });
+            if (password.length < 6) {
+                Swal.fire({ 
+                    ...getSwalStyle(), 
+                    icon: 'warning', 
+                    title: currentLang === 'vi' ? 'MẬT KHẨU YẾU' : 'WEAK PASSWORD', 
+                    text: currentLang === 'vi' ? 'Mật khẩu phải có ít nhất 6 ký tự!' : 'Password must be at least 6 characters long!' 
+                });
+                return;
+            }
 
-  } catch (error) {
-    Swal.fire({ ...getSwalStyle(), icon: 'error', title: 'Lỗi hệ thống', text: `Đăng ký thất bại: ${error.message}` });
-  }
-}
+            try {
+                const userRef = db.collection('users').doc(username);
+                const userDoc = await userRef.get();
 
-async function loginUser() {
-  const username = document.getElementById('loginUser').value.trim();
-  const password = document.getElementById('loginPass').value.trim();
-  
-  if (!username || !password) {
-    Swal.fire({ ...getSwalStyle(), icon: 'warning', title: 'Lỗi', text: 'Vui lòng nhập đầy đủ!' });
-    return;
-  }
-  
-  try {
-    const userRef = db.collection('users').doc(username);
-    const userDoc = await userRef.get();
+                if (userDoc.exists) {
+                    Swal.fire({ 
+                        ...getSwalStyle(), 
+                        icon: 'error', 
+                        title: currentLang === 'vi' ? 'TÀI KHOẢN TỒN TẠI' : 'ACCOUNT EXISTS', 
+                        text: currentLang === 'vi' ? 'Tài khoản này đã được đăng ký. Vui lòng chọn Tài khoản khác.' : 'This username is already registered. Please choose another one.' 
+                    });
+                    return;
+                }
 
-    if (userDoc.exists && userDoc.data().password === password) {
-      localStorage.setItem('tool_user_info', JSON.stringify(userDoc.data()));
+                await userRef.set({
+                    username: username,
+                    password: password, 
+                    balance: 0,
+                    isActive: false,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
 
-      Swal.fire({ 
-        ...getSwalStyle(), 
-        icon: 'success', 
-        title: 'Đăng nhập thành công!', 
-        timer: 1000, 
-        showConfirmButton: false 
-      }).then(() => {
-        window.location.href = 'key.html';
-      });
-    } else {
-      Swal.fire({ ...getSwalStyle(), icon: 'error', title: 'Lỗi', text: 'Sai tên đăng nhập hoặc mật khẩu.' });
-    }
-  } catch (error) {
-    Swal.fire({ ...getSwalStyle(), icon: 'error', title: 'Lỗi hệ thống', text: `Đăng nhập thất bại: ${error.message}` });
-  }
-}
-</script>
+                Swal.fire({ 
+                    ...getSwalStyle(), 
+                    icon: 'success', 
+                    title: currentLang === 'vi' ? 'ĐĂNG KÝ THÀNH CÔNG!' : 'REGISTRATION SUCCESS!', 
+                    text: currentLang === 'vi' ? 'Tài khoản đã được tạo. Vui lòng đăng nhập.' : 'Account created successfully. Please login.' 
+                }).then(() => {
+                    // Chuyển sang form Đăng nhập
+                    switchForm(signinContainer, signupContainer);
+                    document.getElementById('signin-username').value = username;
+                    document.getElementById('signin-password').focus();
+                });
 
+            } catch (error) {
+                Swal.fire({ 
+                    ...getSwalStyle(), 
+                    icon: 'error', 
+                    title: currentLang === 'vi' ? 'LỖI HỆ THỐNG' : 'SYSTEM ERROR', 
+                    text: (currentLang === 'vi' ? 'Đăng ký thất bại: ' : 'Registration failed: ') + error.message 
+                });
+            }
+        });
+
+        // Xử lý Đăng Nhập (Sử dụng Firestore)
+        signinForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = signinForm['signin-username'].value.trim();
+            const password = signinForm['signin-password'].value.trim();
+            
+            if (!username || !password) {
+                Swal.fire({ 
+                    ...getSwalStyle(), 
+                    icon: 'warning', 
+                    title: currentLang === 'vi' ? 'LỖI' : 'ERROR', 
+                    text: currentLang === 'vi' ? 'Vui lòng nhập đầy đủ Tài khoản và Mật khẩu!' : 'Please enter both Username and Password!' 
+                });
+                return;
+            }
+            
+            try {
+                const userRef = db.collection('users').doc(username);
+                const userDoc = await userRef.get();
+
+                if (userDoc.exists && userDoc.data().password === password) {
+                    // Lưu thông tin người dùng vào Local Storage
+                    localStorage.setItem('tool_user_info', JSON.stringify(userDoc.data()));
+
+                    Swal.fire({ 
+                        ...getSwalStyle(), 
+                        icon: 'success', 
+                        title: currentLang === 'vi' ? 'ĐĂNG NHẬP THÀNH CÔNG!' : 'LOGIN SUCCESS!', 
+                        timer: 1000, 
+                        showConfirmButton: false 
+                    }).then(() => {
+                        // Chuyển hướng đến key.html theo yêu cầu
+                        window.location.href = 'key.html';
+                    });
+                } else {
+                    Swal.fire({ 
+                        ...getSwalStyle(), 
+                        icon: 'error', 
+                        title: currentLang === 'vi' ? 'TRUY CẬP BỊ TỪ CHỐI' : 'ACCESS DENIED', 
+                        text: currentLang === 'vi' ? 'Sai Tài khoản hoặc Mật khẩu. Vui lòng kiểm tra lại.' : 'Incorrect Username or Password. Please check again.' 
+                    });
+                }
+            } catch (error) {
+                Swal.fire({ 
+                    ...getSwalStyle(), 
+                    icon: 'error', 
+                    title: currentLang === 'vi' ? 'LỖI HỆ THỐNG' : 'SYSTEM ERROR', 
+                    text: (currentLang === 'vi' ? 'Đăng nhập thất bại: ' : 'Login failed: ') + error.message 
+                });
+            }
+        });
+        
+        // Cấu hình chuyển đổi hiển thị mật khẩu bằng sự kiện click
+        document.querySelectorAll('.toggle-password').forEach(icon => {
+            icon.addEventListener('click', (e) => {
+                // Lấy ID của input liên quan
+                const inputId = e.target.previousElementSibling.id;
+                togglePassword(inputId, e.target);
+            });
+        });
+    </script>
 </body>
 </html>
